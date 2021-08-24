@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/StartFragment">
+
+    <fragment
+        android:id="@+id/StartFragment"
+        android:name="com.github.vnord.derdiedas.StartFragment"
+        tools:layout="@layout/fragment_start">
+
+        <action
+            android:id="@+id/action_StartFragment_to_QuizFragment"
+            app:destination="@id/QuizFragment" />
+        <action
+            android:id="@+id/action_StartFragment_to_NewEntryFragment"
+            app:destination="@id/NewEntryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/QuizFragment"
+        android:name="com.github.vnord.derdiedas.QuizFragment"
+        tools:layout="@layout/fragment_quiz">
+
+        <action
+            android:id="@+id/action_QuizFragment_to_StartFragment"
+            app:destination="@id/StartFragment" />
+        <action
+            android:id="@+id/action_SecondFragment_self"
+            app:destination="@id/QuizFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/NewEntryFragment"
+        android:name="com.github.vnord.derdiedas.NewEntryFragment"
+        tools:layout="@layout/fragment_new_entry" >
+        <action
+            android:id="@+id/action_NewEntryFragment_to_StartFragment"
+            app:destination="@id/StartFragment" />
+    </fragment>
+</navigation>
