@@ -13,4 +13,4 @@ data class Article(
     val gender: Gender
 )
 
-enum class Gender { DER, DIE, DAS }
+enum class Gender(val str: String) { DER("der"), DIE("die"), DAS("das") }

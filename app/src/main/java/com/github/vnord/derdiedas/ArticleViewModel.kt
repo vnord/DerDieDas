@@ -4,19 +4,13 @@ import androidx.lifecycle.*
 import com.github.vnord.derdiedas.data.Article
 import com.github.vnord.derdiedas.data.ArticleDao
 import com.github.vnord.derdiedas.data.Gender
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
 class ArticleViewModel(private val articleDao: ArticleDao) : ViewModel() {
 
-    val genderButtonId by lazy {
-        MutableLiveData<Int>()
-    }
-
-    val articleInputText by lazy {
-        MutableLiveData<String?>()
-    }
-
+    fun allArticles(): Flow<List<Article>> = articleDao.getArticles()
 
     private fun insertArticle(article: Article) {
         viewModelScope.launch {
