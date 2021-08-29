@@ -15,8 +15,8 @@ interface ArticleDao {
     fun getArticles(): Flow<List<Article>>
 
     @Query("SELECT COUNT(*) FROM article")
-    fun getNumberOfArticles(): Int
+    suspend fun getNumberOfArticles(): Int
 
     @Query("SELECT * FROM article ORDER BY article ASC LIMIT 1 OFFSET :n")
-    fun getNthArticle(n: Int): Article
+    suspend fun getNthArticle(n: Int): Article
 }

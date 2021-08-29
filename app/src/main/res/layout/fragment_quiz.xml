@@ -20,7 +20,7 @@
             android:id="@+id/article"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@string/quiz_gender_and_article(quizViewModel.gender, quizViewModel.actualArticle)}"
+            android:text="@{@string/quiz_gender_and_article(quizViewModel.article.gender.str, quizViewModel.article.article)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
