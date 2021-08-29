@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -39,6 +40,14 @@ class NewEntryFragment : Fragment() {
         binding.submitButton.setOnClickListener {
             addNewArticle()
         }
+
+        binding.articleField.addTextChangedListener {
+            binding.submitButton.isEnabled = isEntryValid()
+        }
+
+        binding.articleRadioGroup.setOnCheckedChangeListener { _, _ ->
+            binding.submitButton.isEnabled = isEntryValid()
+        }
     }
 
     private fun getSelectedGender(): Gender {
@@ -49,21 +58,17 @@ class NewEntryFragment : Fragment() {
         }
     }
 
-    fun isEntryValid(): Boolean {
+    private fun isEntryValid(): Boolean {
         return binding.articleRadioGroup.checkedRadioButtonId != -1
                 && viewModel.isEntryValid(binding.articleField.text.toString())
     }
 
     private fun addNewArticle() {
-        if (isEntryValid()) {
-            viewModel.addNewArticle(
-                binding.articleField.text.toString(),
-                getSelectedGender()
-            )
-            val action = NewEntryFragmentDirections.actionNewEntryFragmentToStartFragment()
-            findNavController().navigate(action)
-        }
+        viewModel.addNewArticle(
+            binding.articleField.text.toString(),
+            getSelectedGender()
+        )
+        val action = NewEntryFragmentDirections.actionNewEntryFragmentToStartFragment()
+        findNavController().navigate(action)
     }
-
-
 }

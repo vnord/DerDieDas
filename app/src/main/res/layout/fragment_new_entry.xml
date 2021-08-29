@@ -4,17 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="newEntryFragment"
-            type="com.github.vnord.derdiedas.NewEntryFragment" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".NewEntryFragment">
-
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/close_button"
@@ -26,7 +19,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
-
 
         <RadioGroup
             android:id="@+id/article_radio_group"
@@ -55,9 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/das" />
-
         </RadioGroup>
-
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/article_field"
@@ -65,8 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="50dp"
             android:hint="@string/enter_article_here"
-            android:lines="1"
-            android:maxLines="1"
+            android:inputType="text"
             android:minHeight="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -78,8 +67,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:enabled="false"
             android:text="@string/submit"
-            android:enabled="@{newEntryFragment.isEntryValid()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
