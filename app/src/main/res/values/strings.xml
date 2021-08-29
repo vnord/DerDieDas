@@ -12,4 +12,6 @@
     <string name="der">Der</string>
     <string name="die">Die</string>
     <string name="das">Das</string>
+    <string name="view_list_of_articles">View list of articles</string>
+    <string name="quiz_gender_and_article">%s %s</string>
 </resources>

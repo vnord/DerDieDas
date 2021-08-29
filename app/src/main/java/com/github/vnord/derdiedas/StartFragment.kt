@@ -20,40 +20,23 @@ class StartFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private lateinit var recyclerView: RecyclerView
-
-    private val viewModel: ArticleViewModel by activityViewModels {
-        ArticleViewModelFactory(
-            (activity?.application as DerDieDasApplication).dataBase.articleDao()
-        )
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentStartBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView = binding.articlesView
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val articleAdapter = ArticleAdapter({})
-        recyclerView.adapter = articleAdapter
-        lifecycle.coroutineScope.launch {
-            viewModel.allArticles().collect() {
-                articleAdapter.submitList(it)
-            }
-        }
 
         binding.startButton.setOnClickListener {
             findNavController().navigate(R.id.action_StartFragment_to_QuizFragment)
         }
-        binding.newEntryButton.setOnClickListener {
-            findNavController().navigate(R.id.action_StartFragment_to_NewEntryFragment)
+
+        binding.listButton.setOnClickListener {
+            findNavController().navigate(R.id.action_StartFragment_to_articleListFragment)
         }
     }
 

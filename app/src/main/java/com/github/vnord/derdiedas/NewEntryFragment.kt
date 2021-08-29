@@ -31,12 +31,7 @@ class NewEntryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = this
 
-        binding.closeButton.setOnClickListener {
-            val action = NewEntryFragmentDirections.actionNewEntryFragmentToStartFragment()
-            findNavController().navigate(action)
-        }
         binding.submitButton.setOnClickListener {
             addNewArticle()
         }
@@ -68,7 +63,7 @@ class NewEntryFragment : Fragment() {
             binding.articleField.text.toString(),
             getSelectedGender()
         )
-        val action = NewEntryFragmentDirections.actionNewEntryFragmentToStartFragment()
+        val action = NewEntryFragmentDirections.actionNewEntryFragmentToArticleListFragment()
         findNavController().navigate(action)
     }
 }

@@ -5,10 +5,12 @@
       <map>
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.5651041666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/article_item.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_article_list.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/fragment_new_entry.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_new_entry.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_start.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_start.xml" value="0.25" />
       </map>
     </option>
   </component>
