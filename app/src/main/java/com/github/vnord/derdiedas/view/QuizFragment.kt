@@ -17,12 +17,6 @@ class QuizFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-//    private val viewModel: QuizViewModel by lazy {
-//        ViewModelProvider(
-//            this,
-//            QuizViewModelFactory((activity?.application as DerDieDasApplication).dataBase.nounPhraseDao())
-//        ).get(QuizViewModel::class.java)
-//    }
     private val viewModel: QuizViewModel by activityViewModels {
         QuizViewModelFactory((activity?.application as DerDieDasApplication).dataBase.nounPhraseDao())
     }
@@ -30,7 +24,7 @@ class QuizFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentQuizBinding.inflate(inflater, container, false)
         binding.quizViewModel = viewModel
         binding.lifecycleOwner = this

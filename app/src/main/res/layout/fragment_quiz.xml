@@ -5,11 +5,9 @@
     tools:context=".view.QuizFragment">
 
     <data>
-
         <variable
             name="quizViewModel"
             type="com.github.vnord.derdiedas.viewmodel.QuizViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,10 +19,49 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{@string/quiz_gender_and_noun(quizViewModel.nounPhrase.gender.str, quizViewModel.nounPhrase.noun)}"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button_group"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/button_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/noun_phrase">
+
+            <Button
+                android:id="@+id/der_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16sp"
+                android:text="@string/der"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/die_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16sp"
+                android:text="@string/die"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/das_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16sp"
+                android:gravity="center|center_vertical"
+                android:text="@string/das"
+                tools:ignore="ButtonStyle" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </layout>
