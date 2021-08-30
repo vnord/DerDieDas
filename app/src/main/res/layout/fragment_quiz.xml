@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".QuizFragment">
+    tools:context=".view.QuizFragment">
 
     <data>
 
         <variable
             name="quizViewModel"
-            type="com.github.vnord.derdiedas.QuizViewModel" />
+            type="com.github.vnord.derdiedas.viewmodel.QuizViewModel" />
 
     </data>
 
@@ -17,10 +17,10 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/article"
+            android:id="@+id/noun_phrase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@string/quiz_gender_and_article(quizViewModel.article.gender.str, quizViewModel.article.article)}"
+            android:text="@{@string/quiz_gender_and_noun(quizViewModel.nounPhrase.gender.str, quizViewModel.nounPhrase.noun)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

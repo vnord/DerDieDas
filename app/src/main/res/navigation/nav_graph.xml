@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/StartFragment"
-        android:name="com.github.vnord.derdiedas.StartFragment"
+        android:name="com.github.vnord.derdiedas.view.StartFragment"
         tools:layout="@layout/fragment_start">
 
         <action
             android:id="@+id/action_StartFragment_to_QuizFragment"
             app:destination="@id/QuizFragment" />
         <action
-            android:id="@+id/action_StartFragment_to_articleListFragment"
-            app:destination="@id/articleListFragment" />
+            android:id="@+id/action_StartFragment_to_nounPhraseListFragment"
+            app:destination="@id/nounPhraseListFragment" />
     </fragment>
     <fragment
         android:id="@+id/QuizFragment"
-        android:name="com.github.vnord.derdiedas.QuizFragment"
+        android:name="com.github.vnord.derdiedas.view.QuizFragment"
         tools:layout="@layout/fragment_quiz">
 
         <action
@@ -28,19 +28,19 @@
     </fragment>
     <fragment
         android:id="@+id/NewEntryFragment"
-        android:name="com.github.vnord.derdiedas.NewEntryFragment"
+        android:name="com.github.vnord.derdiedas.view.NewEntryFragment"
         tools:layout="@layout/fragment_new_entry" >
         <action
-            android:id="@+id/action_NewEntryFragment_to_articleListFragment"
-            app:destination="@id/articleListFragment" />
+            android:id="@+id/action_NewEntryFragment_to_nounPhraseListFragment"
+            app:destination="@id/nounPhraseListFragment" />
     </fragment>
     <fragment
-        android:id="@+id/articleListFragment"
-        android:name="com.github.vnord.derdiedas.ArticleListFragment"
-        android:label="fragment_article_list"
-        tools:layout="@layout/fragment_article_list" >
+        android:id="@+id/nounPhraseListFragment"
+        android:name="com.github.vnord.derdiedas.view.NounPhraseListFragment"
+        android:label="fragment_noun_phrase_list"
+        tools:layout="@layout/fragment_noun_phrase_list" >
         <action
-            android:id="@+id/action_articleListFragment_to_NewEntryFragment"
+            android:id="@+id/action_nounPhraseListFragment_to_NewEntryFragment"
             app:destination="@id/NewEntryFragment" />
     </fragment>
 </navigation>

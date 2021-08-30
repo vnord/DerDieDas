@@ -8,10 +8,10 @@
     <string name="add_new_entry">Add new entry</string>
     <string name="end_quiz">End quiz</string>
     <string name="submit">Submit</string>
-    <string name="enter_article_here">Enter article here</string>
+    <string name="enter_noun_phrase_here">Enter noun phrase here</string>
     <string name="der">Der</string>
     <string name="die">Die</string>
     <string name="das">Das</string>
-    <string name="view_list_of_articles">View list of articles</string>
-    <string name="quiz_gender_and_article">%s %s</string>
+    <string name="view_list_of_noun_phrases">View list of noun phrases</string>
+    <string name="quiz_gender_and_noun">%s %s</string>
 </resources>

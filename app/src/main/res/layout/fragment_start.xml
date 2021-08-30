@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StartFragment">
+    tools:context=".view.StartFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/list_button"
@@ -13,7 +13,7 @@
         android:layout_gravity="top|end"
         android:layout_margin="16dp"
         android:layout_marginBottom="16dp"
-        android:contentDescription="@string/view_list_of_articles"
+        android:contentDescription="@string/view_list_of_noun_phrases"
         app:srcCompat="@drawable/ic_baseline_list_24"
         />
 

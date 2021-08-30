@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewEntryFragment">
+    tools:context=".view.NewEntryFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/submit_button"
@@ -17,12 +17,12 @@
         android:text="@string/submit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/article_radio_group"
+        app:layout_constraintTop_toBottomOf="@id/gender_radio_group"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ic_baseline_check_24" />
 
     <RadioGroup
-        android:id="@+id/article_radio_group"
+        android:id="@+id/gender_radio_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -50,17 +50,17 @@
     </RadioGroup>
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/article_field"
+        android:id="@+id/noun_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:hint="@string/enter_article_here"
+        android:hint="@string/enter_noun_phrase_here"
         android:inputType="text"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/article_radio_group"
-        app:layout_constraintTop_toTopOf="@id/article_radio_group"
-        app:layout_constraintBottom_toBottomOf="@id/article_radio_group"
+        app:layout_constraintStart_toEndOf="@id/gender_radio_group"
+        app:layout_constraintTop_toTopOf="@id/gender_radio_group"
+        app:layout_constraintBottom_toBottomOf="@id/gender_radio_group"
         />
 
 

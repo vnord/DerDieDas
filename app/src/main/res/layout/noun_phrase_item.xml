@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/article_text_view"
+        android:id="@+id/noun_phrase_text_view"
         app:layout_constraintStart_toEndOf="@id/gender_text_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

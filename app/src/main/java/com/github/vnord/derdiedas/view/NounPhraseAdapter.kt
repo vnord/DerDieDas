@@ -1,23 +1,23 @@
-package com.github.vnord.derdiedas
+package com.github.vnord.derdiedas.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.github.vnord.derdiedas.data.Article
-import com.github.vnord.derdiedas.databinding.ArticleItemBinding
+import com.github.vnord.derdiedas.data.NounPhrase
+import com.github.vnord.derdiedas.databinding.NounPhraseItemBinding
 
-class ArticleAdapter(private val onItemClicked: (Article) -> Unit) :
-    ListAdapter<Article, ArticleAdapter.BusStopViewHolder>(DiffCallback) {
+class NounPhraseAdapter(private val onItemClicked: (NounPhrase) -> Unit) :
+    ListAdapter<NounPhrase, NounPhraseAdapter.BusStopViewHolder>(DiffCallback) {
 
     companion object {
-        private val DiffCallback = object : DiffUtil.ItemCallback<Article>() {
-            override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
-                return oldItem.article == newItem.article
+        private val DiffCallback = object : DiffUtil.ItemCallback<NounPhrase>() {
+            override fun areItemsTheSame(oldItem: NounPhrase, newItem: NounPhrase): Boolean {
+                return oldItem.noun == newItem.noun
             }
 
-            override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
+            override fun areContentsTheSame(oldItem: NounPhrase, newItem: NounPhrase): Boolean {
                 return oldItem == newItem
             }
         }
@@ -29,7 +29,7 @@ class ArticleAdapter(private val onItemClicked: (Article) -> Unit) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BusStopViewHolder {
         val viewHolder = BusStopViewHolder(
-            ArticleItemBinding.inflate(
+            NounPhraseItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -42,11 +42,11 @@ class ArticleAdapter(private val onItemClicked: (Article) -> Unit) :
         return viewHolder
     }
 
-    class BusStopViewHolder(private var binding: ArticleItemBinding) :
+    class BusStopViewHolder(private var binding: NounPhraseItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(article: Article) {
-            binding.genderTextView.text = article.gender.str
-            binding.articleTextView.text = article.article
+        fun bind(nounPhrase: NounPhrase) {
+            binding.genderTextView.text = nounPhrase.gender.str
+            binding.nounPhraseTextView.text = nounPhrase.noun
         }
     }
 }

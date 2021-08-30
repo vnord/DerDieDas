@@ -4,11 +4,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "article")
-data class Article(
+@Entity(tableName = "noun_phrase")
+data class NounPhrase(
     @PrimaryKey
-    @ColumnInfo(name = "article")
-    val article: String,
+    @ColumnInfo(name = "noun")
+    val noun: String,
     @ColumnInfo(name = "gender")
     val gender: Gender
 )

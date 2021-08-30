@@ -1,4 +1,4 @@
-package com.github.vnord.derdiedas
+package com.github.vnord.derdiedas.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,21 +10,22 @@ import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.github.vnord.derdiedas.databinding.FragmentArticleListBinding
+import com.github.vnord.derdiedas.*
+import com.github.vnord.derdiedas.databinding.FragmentNounPhraseListBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class ArticleListFragment : Fragment() {
+class NounPhraseListFragment : Fragment() {
 
-    private var _binding: FragmentArticleListBinding? = null
+    private var _binding: FragmentNounPhraseListBinding? = null
 
     private val binding get() = _binding!!
 
     private lateinit var recyclerView: RecyclerView
 
-    private val viewModel: ArticleViewModel by activityViewModels {
-        ArticleViewModelFactory(
-            (activity?.application as DerDieDasApplication).dataBase.articleDao()
+    private val viewModel: NounPhraseViewModel by activityViewModels {
+        NounPhraseViewModelFactory(
+            (activity?.application as DerDieDasApplication).dataBase.nounPhraseDao()
         )
     }
 
@@ -32,25 +33,25 @@ class ArticleListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentArticleListBinding.inflate(inflater, container, false)
+        _binding = FragmentNounPhraseListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = binding.articlesView
+        recyclerView = binding.nounPhrasesView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val articleAdapter = ArticleAdapter({})
-        recyclerView.adapter = articleAdapter
+        val nounPhraseAdapter = NounPhraseAdapter({})
+        recyclerView.adapter = nounPhraseAdapter
         lifecycle.coroutineScope.launch {
-            viewModel.allArticles().collect() {
-                articleAdapter.submitList(it)
+            viewModel.allNounPhrases().collect() {
+                nounPhraseAdapter.submitList(it)
             }
         }
 
         binding.newEntryButton.setOnClickListener {
-            findNavController().navigate(R.id.action_articleListFragment_to_NewEntryFragment)
+            findNavController().navigate(R.id.action_nounPhraseListFragment_to_NewEntryFragment)
         }
     }
 

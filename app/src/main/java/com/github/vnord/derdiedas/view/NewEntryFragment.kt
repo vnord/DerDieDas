@@ -1,4 +1,4 @@
-package com.github.vnord.derdiedas
+package com.github.vnord.derdiedas.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,9 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.github.vnord.derdiedas.NounPhraseViewModel
+import com.github.vnord.derdiedas.NounPhraseViewModelFactory
+import com.github.vnord.derdiedas.DerDieDasApplication
 import com.github.vnord.derdiedas.data.Gender
 import com.github.vnord.derdiedas.databinding.FragmentNewEntryBinding
 
@@ -16,8 +19,8 @@ class NewEntryFragment : Fragment() {
     private var _binding: FragmentNewEntryBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: ArticleViewModel by activityViewModels {
-        ArticleViewModelFactory((activity?.application as DerDieDasApplication).dataBase.articleDao())
+    private val viewModel: NounPhraseViewModel by activityViewModels {
+        NounPhraseViewModelFactory((activity?.application as DerDieDasApplication).dataBase.nounPhraseDao())
     }
 
     override fun onCreateView(
@@ -33,20 +36,20 @@ class NewEntryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.submitButton.setOnClickListener {
-            addNewArticle()
+            addNewNounPhrase()
         }
 
-        binding.articleField.addTextChangedListener {
+        binding.nounField.addTextChangedListener {
             binding.submitButton.isEnabled = isEntryValid()
         }
 
-        binding.articleRadioGroup.setOnCheckedChangeListener { _, _ ->
+        binding.genderRadioGroup.setOnCheckedChangeListener { _, _ ->
             binding.submitButton.isEnabled = isEntryValid()
         }
     }
 
     private fun getSelectedGender(): Gender {
-        return when (binding.articleRadioGroup.checkedRadioButtonId) {
+        return when (binding.genderRadioGroup.checkedRadioButtonId) {
             binding.derButton.id -> Gender.DER
             binding.dieButton.id -> Gender.DIE
             else -> Gender.DAS
@@ -54,16 +57,16 @@ class NewEntryFragment : Fragment() {
     }
 
     private fun isEntryValid(): Boolean {
-        return binding.articleRadioGroup.checkedRadioButtonId != -1
-                && viewModel.isEntryValid(binding.articleField.text.toString())
+        return binding.genderRadioGroup.checkedRadioButtonId != -1
+                && viewModel.isEntryValid(binding.nounField.text.toString())
     }
 
-    private fun addNewArticle() {
-        viewModel.addNewArticle(
-            binding.articleField.text.toString(),
+    private fun addNewNounPhrase() {
+        viewModel.addNewNounPhrase(
+            binding.nounField.text.toString(),
             getSelectedGender()
         )
-        val action = NewEntryFragmentDirections.actionNewEntryFragmentToArticleListFragment()
+        val action = NewEntryFragmentDirections.actionNewEntryFragmentToNounPhraseListFragment()
         findNavController().navigate(action)
     }
 }

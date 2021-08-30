@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ArticleListFragment">
+    tools:context=".view.NounPhraseListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/articles_view"
+        android:id="@+id/noun_phrases_view"
         android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
