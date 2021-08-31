@@ -5,6 +5,7 @@
     tools:context=".view.QuizFragment">
 
     <data>
+
         <variable
             name="quizViewModel"
             type="com.github.vnord.derdiedas.viewmodel.QuizViewModel" />
@@ -18,19 +19,21 @@
             android:id="@+id/noun_phrase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@string/quiz_gender_and_noun(quizViewModel.nounPhrase.gender.str, quizViewModel.nounPhrase.noun)}"
+            android:hint="@string/der_artikel"
+            android:text="@{@string/quiz_gender_and_noun(quizViewModel.nounPhrase.noun)}"
             android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@id/ddd_button_group"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/button_group"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/button_group"
+            android:id="@+id/ddd_button_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/known_button_group"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/noun_phrase">
@@ -59,6 +62,38 @@
                 android:gravity="center|center_vertical"
                 android:text="@string/das"
                 tools:ignore="ButtonStyle" />
+        </LinearLayout>
+
+        <!--        TODO: This layout needs some work, e.g. these buttons should be at the bottom instead-->
+        <LinearLayout
+            android:id="@+id/known_button_group"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ddd_button_group">
+
+            <Button
+                android:id="@+id/already_known_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="25dp"
+                android:layout_weight="1"
+                android:text="@string/i_already_know"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/dont_know_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="25dp"
+                android:layout_weight="1"
+                android:text="@string/i_forgot_or_don_t_know"
+                tools:ignore="ButtonStyle" />
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,9 +8,9 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.github.vnord.derdiedas.DerDieDasApplication
 import com.github.vnord.derdiedas.NounPhraseViewModel
 import com.github.vnord.derdiedas.NounPhraseViewModelFactory
-import com.github.vnord.derdiedas.DerDieDasApplication
 import com.github.vnord.derdiedas.data.Gender
 import com.github.vnord.derdiedas.databinding.FragmentNewEntryBinding
 
@@ -27,7 +27,7 @@ class NewEntryFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentNewEntryBinding.inflate(inflater, container, false)
         return binding.root
     }

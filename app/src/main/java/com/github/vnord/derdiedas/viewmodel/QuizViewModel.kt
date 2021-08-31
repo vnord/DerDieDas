@@ -1,22 +1,40 @@
 package com.github.vnord.derdiedas.viewmodel
 
 import androidx.lifecycle.*
+import com.github.vnord.derdiedas.data.Gender
 import com.github.vnord.derdiedas.data.NounPhrase
 import com.github.vnord.derdiedas.data.NounPhraseDao
-import com.github.vnord.derdiedas.data.Gender
 import kotlinx.coroutines.launch
 
 class QuizViewModel(private val nounPhraseDao: NounPhraseDao) : ViewModel() {
 
-    private var _nounPhrase: MutableLiveData<NounPhrase> = MutableLiveData(NounPhrase("Please wait", Gender.DER))
-    val nounPhrase: LiveData<NounPhrase>
+    private var _nounPhrase: MutableLiveData<NounPhrase?> = MutableLiveData(null)
+    val nounPhrase: LiveData<NounPhrase?>
         get() = _nounPhrase
 
     fun getRandomNounPhrase() {
         viewModelScope.launch {
-            val numberOfNounPhrases = nounPhraseDao.getNumberOfNounPhrases()
-            _nounPhrase.value = nounPhraseDao.getNthNounPhrase((0 until numberOfNounPhrases).random())
+            val eligiblePhrases = nounPhraseDao.getEligibleNounPhrases()
+            if (eligiblePhrases.isEmpty()) _nounPhrase.value = null
+            else _nounPhrase.value = eligiblePhrases.random()
         }
+    }
+
+    fun updateNextReview() {
+        viewModelScope.launch {
+            nounPhrase.value?.let {
+                nounPhraseDao.update(
+                    it.copy(
+                        nextReview = System.currentTimeMillis().plus(10000),
+                        reviewsDone = it.reviewsDone.inc()
+                    )
+                )
+            }
+        }
+    }
+
+    fun isGenderCorrect(gender: Gender): Boolean {
+        return gender == nounPhrase.value?.gender
     }
 }
 
