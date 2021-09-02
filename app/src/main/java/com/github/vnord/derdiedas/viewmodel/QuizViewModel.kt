@@ -8,15 +8,14 @@ import kotlinx.coroutines.launch
 
 class QuizViewModel(private val nounPhraseDao: NounPhraseDao) : ViewModel() {
 
-    private var _nounPhrase: MutableLiveData<NounPhrase?> = MutableLiveData(null)
-    val nounPhrase: LiveData<NounPhrase?>
+    private var _nounPhrase: MutableLiveData<NounPhrase> = MutableLiveData(null)
+    val nounPhrase: LiveData<NounPhrase>
         get() = _nounPhrase
 
     fun getRandomNounPhrase() {
         viewModelScope.launch {
             val eligiblePhrases = nounPhraseDao.getEligibleNounPhrases()
-            if (eligiblePhrases.isEmpty()) _nounPhrase.value = null
-            else _nounPhrase.value = eligiblePhrases.random()
+            if (eligiblePhrases.isNotEmpty()) _nounPhrase.value = eligiblePhrases.random()
         }
     }
 

@@ -28,4 +28,4 @@ data class NounPhrase(
 
 enum class Gender(val str: String) { DER("der"), DIE("die"), DAS("das") }
 
-const val NUMBER_OF_REVIEWS_REQUIRED = 5
+const val NUMBER_OF_REVIEWS_REQUIRED = 500 // TODO set to 5 or something when releasing

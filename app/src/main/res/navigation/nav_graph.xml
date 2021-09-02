@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_StartFragment_to_nounPhraseListFragment"
             app:destination="@id/nounPhraseListFragment" />
+        <action
+            android:id="@+id/action_StartFragment_to_doneFragment"
+            app:destination="@id/doneFragment" />
     </fragment>
     <fragment
         android:id="@+id/QuizFragment"
@@ -35,7 +38,7 @@
     <fragment
         android:id="@+id/NewEntryFragment"
         android:name="com.github.vnord.derdiedas.view.NewEntryFragment"
-        tools:layout="@layout/fragment_new_entry" >
+        tools:layout="@layout/fragment_new_entry">
         <action
             android:id="@+id/action_NewEntryFragment_to_nounPhraseListFragment"
             app:destination="@id/nounPhraseListFragment" />
@@ -44,7 +47,7 @@
         android:id="@+id/nounPhraseListFragment"
         android:name="com.github.vnord.derdiedas.view.NounPhraseListFragment"
         android:label="fragment_noun_phrase_list"
-        tools:layout="@layout/fragment_noun_phrase_list" >
+        tools:layout="@layout/fragment_noun_phrase_list">
         <action
             android:id="@+id/action_nounPhraseListFragment_to_NewEntryFragment"
             app:destination="@id/NewEntryFragment" />
@@ -56,7 +59,7 @@
         android:id="@+id/doneFragment"
         android:name="com.github.vnord.derdiedas.DoneFragment"
         android:label="fragment_done"
-        tools:layout="@layout/fragment_done" >
+        tools:layout="@layout/fragment_done">
         <action
             android:id="@+id/action_doneFragment_to_StartFragment"
             app:destination="@id/StartFragment" />

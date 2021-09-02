@@ -24,6 +24,7 @@ class NounPhraseViewModel(private val nounPhraseDao: NounPhraseDao) : ViewModel(
 
     fun isEntryValid(noun: String) = noun.isNotBlank()
 
+    fun getNumberOfEligiblePhrases() = nounPhraseDao.getNumberOfEligiblePhrases().asLiveData()
 }
 
 class NounPhraseViewModelFactory(private val nounPhraseDao: NounPhraseDao) : ViewModelProvider.Factory {

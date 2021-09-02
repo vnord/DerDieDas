@@ -31,4 +31,13 @@ interface NounPhraseDao {
     suspend fun getEligibleNounPhrases(
         now: Long = System.currentTimeMillis()
     ): List<NounPhrase>
+
+    @Query(
+        """SELECT COUNT(*) FROM noun_phrase
+                 WHERE reviews_done < $NUMBER_OF_REVIEWS_REQUIRED
+                 AND (next_review IS NULL OR next_review < :now)"""
+    )
+    fun getNumberOfEligiblePhrases(
+        now: Long = System.currentTimeMillis()
+    ): Flow<Int>
 }
