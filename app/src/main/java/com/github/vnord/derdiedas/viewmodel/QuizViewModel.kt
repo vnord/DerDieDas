@@ -2,6 +2,7 @@ package com.github.vnord.derdiedas.viewmodel
 
 import androidx.lifecycle.*
 import com.github.vnord.derdiedas.data.Gender
+import com.github.vnord.derdiedas.data.NUMBER_OF_REVIEWS_REQUIRED
 import com.github.vnord.derdiedas.data.NounPhrase
 import com.github.vnord.derdiedas.data.NounPhraseDao
 import kotlinx.coroutines.launch
@@ -19,13 +20,28 @@ class QuizViewModel(private val nounPhraseDao: NounPhraseDao) : ViewModel() {
         }
     }
 
-    fun updateNextReview() {
+    fun updateNextReview(gotItRight: Boolean) {
+        if (gotItRight) {
+            viewModelScope.launch {
+                nounPhrase.value?.let {
+                    nounPhraseDao.update(
+                        it.copy(
+                            nextReview = System.currentTimeMillis().plus(10000),
+                            reviewsDone = it.reviewsDone.inc()
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    fun markThisNounPhraseAsDone() {
         viewModelScope.launch {
             nounPhrase.value?.let {
                 nounPhraseDao.update(
                     it.copy(
-                        nextReview = System.currentTimeMillis().plus(10000),
-                        reviewsDone = it.reviewsDone.inc()
+                        reviewsLeft = 0,
+                        nextReview = 0
                     )
                 )
             }

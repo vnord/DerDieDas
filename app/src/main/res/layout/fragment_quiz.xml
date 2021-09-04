@@ -43,6 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16sp"
+                android:duplicateParentState="true"
                 android:text="@string/der"
                 tools:ignore="ButtonStyle" />
 
@@ -51,6 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16sp"
+                android:duplicateParentState="true"
                 android:text="@string/die"
                 tools:ignore="ButtonStyle" />
 
@@ -59,6 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16sp"
+                android:duplicateParentState="true"
                 android:gravity="center|center_vertical"
                 android:text="@string/das"
                 tools:ignore="ButtonStyle" />
@@ -82,6 +85,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="25dp"
                 android:layout_weight="1"
+                android:duplicateParentState="true"
                 android:text="@string/i_already_know"
                 tools:ignore="ButtonStyle" />
 
@@ -91,6 +95,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="25dp"
                 android:layout_weight="1"
+                android:duplicateParentState="true"
                 android:text="@string/i_forgot_or_don_t_know"
                 tools:ignore="ButtonStyle" />
 
