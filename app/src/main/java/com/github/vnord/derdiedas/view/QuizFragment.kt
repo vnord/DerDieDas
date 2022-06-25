@@ -115,6 +115,7 @@ class QuizFragment : Fragment() {
             Gender.DER -> binding.derButton.setBackgroundColor(correctColor)
             Gender.DIE -> binding.dieButton.setBackgroundColor(correctColor)
             Gender.DAS -> binding.dasButton.setBackgroundColor(correctColor)
+            else -> {}
         }
         lifecycleScope.launch {
             disableAllButtons()

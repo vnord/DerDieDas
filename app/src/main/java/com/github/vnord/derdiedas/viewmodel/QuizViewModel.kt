@@ -54,7 +54,7 @@ class QuizViewModel(private val nounPhraseDao: NounPhraseDao) : ViewModel() {
 }
 
 class QuizViewModelFactory(private val nounPhraseDao: NounPhraseDao) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(QuizViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return QuizViewModel(nounPhraseDao) as T

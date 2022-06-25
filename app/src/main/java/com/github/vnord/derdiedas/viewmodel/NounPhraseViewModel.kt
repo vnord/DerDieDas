@@ -28,7 +28,7 @@ class NounPhraseViewModel(private val nounPhraseDao: NounPhraseDao) : ViewModel(
 }
 
 class NounPhraseViewModelFactory(private val nounPhraseDao: NounPhraseDao) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(NounPhraseViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return NounPhraseViewModel(nounPhraseDao) as T
