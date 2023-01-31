@@ -14,8 +14,8 @@
             android:id="@+id/action_StartFragment_to_QuizFragment"
             app:destination="@id/QuizFragment" />
         <action
-            android:id="@+id/action_StartFragment_to_nounPhraseListFragment"
-            app:destination="@id/nounPhraseListFragment" />
+            android:id="@+id/action_StartFragment_to_nounListFragment"
+            app:destination="@id/nounListFragment" />
         <action
             android:id="@+id/action_StartFragment_to_doneFragment"
             app:destination="@id/doneFragment" />
@@ -40,19 +40,19 @@
         android:name="com.github.vnord.derdiedas.view.NewEntryFragment"
         tools:layout="@layout/fragment_new_entry">
         <action
-            android:id="@+id/action_NewEntryFragment_to_nounPhraseListFragment"
-            app:destination="@id/nounPhraseListFragment" />
+            android:id="@+id/action_NewEntryFragment_to_nounListFragment"
+            app:destination="@id/nounListFragment" />
     </fragment>
     <fragment
-        android:id="@+id/nounPhraseListFragment"
-        android:name="com.github.vnord.derdiedas.view.NounPhraseListFragment"
-        android:label="fragment_noun_phrase_list"
-        tools:layout="@layout/fragment_noun_phrase_list">
+        android:id="@+id/nounListFragment"
+        android:name="com.github.vnord.derdiedas.view.NounListFragment"
+        android:label="fragment_noun_list"
+        tools:layout="@layout/fragment_noun_list">
         <action
-            android:id="@+id/action_nounPhraseListFragment_to_NewEntryFragment"
+            android:id="@+id/action_nounListFragment_to_NewEntryFragment"
             app:destination="@id/NewEntryFragment" />
         <action
-            android:id="@+id/action_nounPhraseListFragment_to_StartFragment"
+            android:id="@+id/action_nounListFragment_to_StartFragment"
             app:destination="@id/StartFragment" />
     </fragment>
     <fragment

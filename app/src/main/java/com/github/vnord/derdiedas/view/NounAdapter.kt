@@ -5,19 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.github.vnord.derdiedas.data.NounPhrase
-import com.github.vnord.derdiedas.databinding.NounPhraseItemBinding
+import com.github.vnord.derdiedas.data.Noun
+import com.github.vnord.derdiedas.databinding.NounItemBinding
 
-class NounPhraseAdapter(private val onItemClicked: (NounPhrase) -> Unit) :
-    ListAdapter<NounPhrase, NounPhraseAdapter.BusStopViewHolder>(DiffCallback) {
+class NounAdapter(private val onItemClicked: (Noun) -> Unit) :
+    ListAdapter<Noun, NounAdapter.BusStopViewHolder>(DiffCallback) {
 
     companion object {
-        private val DiffCallback = object : DiffUtil.ItemCallback<NounPhrase>() {
-            override fun areItemsTheSame(oldItem: NounPhrase, newItem: NounPhrase): Boolean {
+        private val DiffCallback = object : DiffUtil.ItemCallback<Noun>() {
+            override fun areItemsTheSame(oldItem: Noun, newItem: Noun): Boolean {
                 return oldItem.noun == newItem.noun
             }
 
-            override fun areContentsTheSame(oldItem: NounPhrase, newItem: NounPhrase): Boolean {
+            override fun areContentsTheSame(oldItem: Noun, newItem: Noun): Boolean {
                 return oldItem == newItem
             }
         }
@@ -29,7 +29,7 @@ class NounPhraseAdapter(private val onItemClicked: (NounPhrase) -> Unit) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BusStopViewHolder {
         val viewHolder = BusStopViewHolder(
-            NounPhraseItemBinding.inflate(
+            NounItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -42,11 +42,11 @@ class NounPhraseAdapter(private val onItemClicked: (NounPhrase) -> Unit) :
         return viewHolder
     }
 
-    class BusStopViewHolder(private var binding: NounPhraseItemBinding) :
+    class BusStopViewHolder(private var binding: NounItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(nounPhrase: NounPhrase) {
-            binding.genderTextView.text = nounPhrase.gender.str
-            binding.nounPhraseTextView.text = nounPhrase.noun
+        fun bind(noun: Noun) {
+            binding.genderTextView.text = noun.gender.str
+            binding.nounTextView.text = noun.noun
         }
     }
 }

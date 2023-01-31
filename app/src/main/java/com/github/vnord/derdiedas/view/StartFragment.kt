@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.github.vnord.derdiedas.DerDieDasApplication
-import com.github.vnord.derdiedas.NounPhraseViewModel
-import com.github.vnord.derdiedas.NounPhraseViewModelFactory
+import com.github.vnord.derdiedas.NounViewModel
+import com.github.vnord.derdiedas.NounViewModelFactory
 import com.github.vnord.derdiedas.R
 import com.github.vnord.derdiedas.databinding.FragmentStartBinding
 
@@ -22,8 +22,8 @@ class StartFragment : Fragment() {
 
     private var startQuizAction = StartFragmentDirections.actionStartFragmentToDoneFragment()
 
-    private val nounPhraseViewModel: NounPhraseViewModel by activityViewModels {
-        NounPhraseViewModelFactory((activity?.application as DerDieDasApplication).dataBase.nounPhraseDao())
+    private val nounViewModel: NounViewModel by activityViewModels {
+        NounViewModelFactory((activity?.application as DerDieDasApplication).dataBase.nounDao())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +44,7 @@ class StartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        nounPhraseViewModel.getNumberOfEligiblePhrases().observe(this.viewLifecycleOwner) {
+        nounViewModel.getNumberOfEligibleNouns().observe(this.viewLifecycleOwner) {
             if (it > 0) {
                 startQuizAction = StartFragmentDirections.actionStartFragmentToQuizFragment()
             }
@@ -55,7 +55,7 @@ class StartFragment : Fragment() {
         }
 
         binding.listButton.setOnClickListener {
-            findNavController().navigate(R.id.action_StartFragment_to_nounPhraseListFragment)
+            findNavController().navigate(R.id.action_StartFragment_to_nounListFragment)
         }
     }
 

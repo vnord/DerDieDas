@@ -8,11 +8,11 @@
     <string name="add_new_entry">Add new entry</string>
     <string name="end_quiz">End quiz</string>
     <string name="submit">Submit</string>
-    <string name="enter_noun_phrase_here">Enter noun phrase here</string>
-    <string name="der">Der</string>
-    <string name="die">Die</string>
-    <string name="das">Das</string>
-    <string name="view_list_of_noun_phrases">View list of noun phrases</string>
+    <string name="enter_noun_here">Enter noun here</string>
+    <string name="der" translatable="false">Der</string>
+    <string name="die" translatable="false">Die</string>
+    <string name="das" translatable="false">Das</string>
+    <string name="view_list_of_nouns">View list of nouns</string>
     <string name="quiz_gender_and_noun">___ %s</string>
     <string name="i_forgot_or_don_t_know">I forgot or don\'t know</string>
     <string name="i_already_know">I already know</string>

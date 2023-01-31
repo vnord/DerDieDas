@@ -12,31 +12,30 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.vnord.derdiedas.DerDieDasApplication
-import com.github.vnord.derdiedas.NounPhraseViewModel
-import com.github.vnord.derdiedas.NounPhraseViewModelFactory
+import com.github.vnord.derdiedas.NounViewModel
+import com.github.vnord.derdiedas.NounViewModelFactory
 import com.github.vnord.derdiedas.R
-import com.github.vnord.derdiedas.databinding.FragmentNounPhraseListBinding
-import kotlinx.coroutines.flow.collect
+import com.github.vnord.derdiedas.databinding.FragmentNounListBinding
 import kotlinx.coroutines.launch
 
-class NounPhraseListFragment : Fragment() {
+class NounListFragment : Fragment() {
 
-    private var _binding: FragmentNounPhraseListBinding? = null
+    private var _binding: FragmentNounListBinding? = null
 
     private val binding get() = _binding!!
 
     private lateinit var recyclerView: RecyclerView
 
-    private val viewModel: NounPhraseViewModel by activityViewModels {
-        NounPhraseViewModelFactory(
-            (activity?.application as DerDieDasApplication).dataBase.nounPhraseDao()
+    private val viewModel: NounViewModel by activityViewModels {
+        NounViewModelFactory(
+            (activity?.application as DerDieDasApplication).dataBase.nounDao()
         )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-            findNavController().navigate(R.id.action_nounPhraseListFragment_to_StartFragment)
+            findNavController().navigate(R.id.action_nounListFragment_to_StartFragment)
         }
     }
 
@@ -44,25 +43,25 @@ class NounPhraseListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentNounPhraseListBinding.inflate(inflater, container, false)
+        _binding = FragmentNounListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = binding.nounPhrasesView
+        recyclerView = binding.nounsView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val nounPhraseAdapter = NounPhraseAdapter({})
-        recyclerView.adapter = nounPhraseAdapter
+        val nounAdapter = NounAdapter({})
+        recyclerView.adapter = nounAdapter
         lifecycle.coroutineScope.launch {
-            viewModel.allNounPhrases().collect() {
-                nounPhraseAdapter.submitList(it)
+            viewModel.allNouns().collect() {
+                nounAdapter.submitList(it)
             }
         }
 
         binding.newEntryButton.setOnClickListener {
-            findNavController().navigate(R.id.action_nounPhraseListFragment_to_NewEntryFragment)
+            findNavController().navigate(R.id.action_nounListFragment_to_NewEntryFragment)
         }
     }
 

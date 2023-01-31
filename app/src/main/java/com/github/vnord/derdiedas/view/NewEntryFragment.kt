@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.github.vnord.derdiedas.DerDieDasApplication
-import com.github.vnord.derdiedas.NounPhraseViewModel
-import com.github.vnord.derdiedas.NounPhraseViewModelFactory
+import com.github.vnord.derdiedas.NounViewModel
+import com.github.vnord.derdiedas.NounViewModelFactory
 import com.github.vnord.derdiedas.data.Gender
 import com.github.vnord.derdiedas.databinding.FragmentNewEntryBinding
 
@@ -19,8 +19,8 @@ class NewEntryFragment : Fragment() {
     private var _binding: FragmentNewEntryBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: NounPhraseViewModel by activityViewModels {
-        NounPhraseViewModelFactory((activity?.application as DerDieDasApplication).dataBase.nounPhraseDao())
+    private val viewModel: NounViewModel by activityViewModels {
+        NounViewModelFactory((activity?.application as DerDieDasApplication).dataBase.nounDao())
     }
 
     override fun onCreateView(
@@ -36,7 +36,7 @@ class NewEntryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.submitButton.setOnClickListener {
-            addNewNounPhrase()
+            addNewNoun()
         }
 
         binding.nounField.addTextChangedListener {
@@ -61,12 +61,12 @@ class NewEntryFragment : Fragment() {
                 && viewModel.isEntryValid(binding.nounField.text.toString())
     }
 
-    private fun addNewNounPhrase() {
-        viewModel.addNewNounPhrase(
+    private fun addNewNoun() {
+        viewModel.addNewNoun(
             binding.nounField.text.toString(),
             getSelectedGender()
         )
-        val action = NewEntryFragmentDirections.actionNewEntryFragmentToNounPhraseListFragment()
+        val action = NewEntryFragmentDirections.actionNewEntryFragmentToNounListFragment()
         findNavController().navigate(action)
     }
 }

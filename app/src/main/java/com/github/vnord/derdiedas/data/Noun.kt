@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "noun_phrase")
-data class NounPhrase(
+@Entity(tableName = "noun")
+data class Noun(
     @PrimaryKey
     @ColumnInfo(name = "noun")
     val noun: String,

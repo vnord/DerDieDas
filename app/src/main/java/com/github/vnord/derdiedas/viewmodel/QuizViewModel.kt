@@ -2,29 +2,28 @@ package com.github.vnord.derdiedas.viewmodel
 
 import androidx.lifecycle.*
 import com.github.vnord.derdiedas.data.Gender
-import com.github.vnord.derdiedas.data.NUMBER_OF_REVIEWS_REQUIRED
-import com.github.vnord.derdiedas.data.NounPhrase
-import com.github.vnord.derdiedas.data.NounPhraseDao
+import com.github.vnord.derdiedas.data.Noun
+import com.github.vnord.derdiedas.data.NounDao
 import kotlinx.coroutines.launch
 
-class QuizViewModel(private val nounPhraseDao: NounPhraseDao) : ViewModel() {
+class QuizViewModel(private val nounDao: NounDao) : ViewModel() {
 
-    private var _nounPhrase: MutableLiveData<NounPhrase> = MutableLiveData(null)
-    val nounPhrase: LiveData<NounPhrase>
-        get() = _nounPhrase
+    private var _noun: MutableLiveData<Noun> = MutableLiveData(null)
+    val noun: LiveData<Noun>
+        get() = _noun
 
-    fun getRandomNounPhrase() {
+    fun getRandomNoun() {
         viewModelScope.launch {
-            val eligiblePhrases = nounPhraseDao.getEligibleNounPhrases()
-            if (eligiblePhrases.isNotEmpty()) _nounPhrase.value = eligiblePhrases.random()
+            val eligibleNouns = nounDao.getEligibleNouns()
+            if (eligibleNouns.isNotEmpty()) _noun.value = eligibleNouns.random()
         }
     }
 
     fun updateNextReview(gotItRight: Boolean) {
         if (gotItRight) {
             viewModelScope.launch {
-                nounPhrase.value?.let {
-                    nounPhraseDao.update(
+                noun.value?.let {
+                    nounDao.update(
                         it.copy(
                             nextReview = System.currentTimeMillis().plus(10000),
                             reviewsDone = it.reviewsDone.inc()
@@ -35,10 +34,10 @@ class QuizViewModel(private val nounPhraseDao: NounPhraseDao) : ViewModel() {
         }
     }
 
-    fun markThisNounPhraseAsDone() {
+    fun markThisNounAsDone() {
         viewModelScope.launch {
-            nounPhrase.value?.let {
-                nounPhraseDao.update(
+            noun.value?.let {
+                nounDao.update(
                     it.copy(
                         reviewsLeft = 0,
                         nextReview = 0
@@ -49,15 +48,15 @@ class QuizViewModel(private val nounPhraseDao: NounPhraseDao) : ViewModel() {
     }
 
     fun isGenderCorrect(gender: Gender): Boolean {
-        return gender == nounPhrase.value?.gender
+        return gender == noun.value?.gender
     }
 }
 
-class QuizViewModelFactory(private val nounPhraseDao: NounPhraseDao) : ViewModelProvider.Factory {
+class QuizViewModelFactory(private val nounDao: NounDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(QuizViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return QuizViewModel(nounPhraseDao) as T
+            return QuizViewModel(nounDao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel Class")
     }

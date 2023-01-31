@@ -11,8 +11,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.github.vnord.derdiedas.DerDieDasApplication
-import com.github.vnord.derdiedas.NounPhraseViewModel
-import com.github.vnord.derdiedas.NounPhraseViewModelFactory
+import com.github.vnord.derdiedas.NounViewModel
+import com.github.vnord.derdiedas.NounViewModelFactory
 import com.github.vnord.derdiedas.data.Gender
 import com.github.vnord.derdiedas.databinding.FragmentQuizBinding
 import com.github.vnord.derdiedas.viewmodel.QuizViewModel
@@ -29,10 +29,10 @@ class QuizFragment : Fragment() {
     private var continueQuizAction = QuizFragmentDirections.actionQuizFragmentSelf()
 
     private val quizViewModel: QuizViewModel by activityViewModels {
-        QuizViewModelFactory((activity?.application as DerDieDasApplication).dataBase.nounPhraseDao())
+        QuizViewModelFactory((activity?.application as DerDieDasApplication).dataBase.nounDao())
     }
-    private val nounPhraseViewModel: NounPhraseViewModel by activityViewModels {
-        NounPhraseViewModelFactory((activity?.application as DerDieDasApplication).dataBase.nounPhraseDao())
+    private val nounViewModel: NounViewModel by activityViewModels {
+        NounViewModelFactory((activity?.application as DerDieDasApplication).dataBase.nounDao())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +49,7 @@ class QuizFragment : Fragment() {
         _binding = FragmentQuizBinding.inflate(inflater, container, false)
         binding.quizViewModel = quizViewModel
         binding.lifecycleOwner = this
-        nounPhraseViewModel.getNumberOfEligiblePhrases().observe(this.viewLifecycleOwner) {
+        nounViewModel.getNumberOfEligibleNouns().observe(this.viewLifecycleOwner) {
             if (it < 1)  continueQuizAction = QuizFragmentDirections.actionQuizFragmentToDoneFragment()
         }
         return binding.root
@@ -57,7 +57,7 @@ class QuizFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        quizViewModel.getRandomNounPhrase()
+        quizViewModel.getRandomNoun()
 
         var gotItRight = true
 
@@ -99,7 +99,7 @@ class QuizFragment : Fragment() {
         }
         binding.alreadyKnownButton.apply {
             this.setOnClickListener {
-                quizViewModel.markThisNounPhraseAsDone()
+                quizViewModel.markThisNounAsDone()
                 highlightCorrectButtonAndContinue()
             }
         }
@@ -111,7 +111,7 @@ class QuizFragment : Fragment() {
     }
 
     private fun highlightCorrectButtonAndContinue() {
-        when (quizViewModel.nounPhrase.value?.gender) {
+        when (quizViewModel.noun.value?.gender) {
             Gender.DER -> binding.derButton.setBackgroundColor(correctColor)
             Gender.DIE -> binding.dieButton.setBackgroundColor(correctColor)
             Gender.DAS -> binding.dasButton.setBackgroundColor(correctColor)

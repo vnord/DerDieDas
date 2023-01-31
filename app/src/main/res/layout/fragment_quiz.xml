@@ -16,11 +16,11 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/noun_phrase"
+            android:id="@+id/noun"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/der_artikel"
-            android:text="@{@string/quiz_gender_and_noun(quizViewModel.nounPhrase.noun)}"
+            android:text="@{@string/quiz_gender_and_noun(quizViewModel.noun.noun)}"
             android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@id/ddd_button_group"
             app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
             app:layout_constraintBottom_toTopOf="@id/known_button_group"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/noun_phrase">
+            app:layout_constraintTop_toBottomOf="@id/noun">
 
             <Button
                 android:id="@+id/der_button"

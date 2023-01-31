@@ -5,6 +5,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
 }
 
+@Suppress("UnstableApiUsage")
 android {
     compileSdk = 33
 
@@ -18,7 +19,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true
-
         multiDexEnabled = true
     }
 

@@ -13,7 +13,7 @@
         android:layout_gravity="top|end"
         android:layout_margin="16dp"
         android:layout_marginBottom="16dp"
-        android:contentDescription="@string/view_list_of_noun_phrases"
+        android:contentDescription="@string/view_list_of_nouns"
         app:srcCompat="@drawable/ic_baseline_list_24"
         />
 
