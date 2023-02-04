@@ -12,8 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.vnord.derdiedas.DerDieDasApplication
-import com.github.vnord.derdiedas.NounViewModel
-import com.github.vnord.derdiedas.NounViewModelFactory
+import com.github.vnord.derdiedas.viewmodel.NounViewModel
+import com.github.vnord.derdiedas.viewmodel.NounViewModelFactory
 import com.github.vnord.derdiedas.R
 import com.github.vnord.derdiedas.databinding.FragmentNounListBinding
 import kotlinx.coroutines.launch
@@ -52,13 +52,9 @@ class NounListFragment : Fragment() {
 
         recyclerView = binding.nounsView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val nounAdapter = NounAdapter({})
+        val nounAdapter = NounAdapter {}
         recyclerView.adapter = nounAdapter
-        lifecycle.coroutineScope.launch {
-            viewModel.allNouns().collect() {
-                nounAdapter.submitList(it)
-            }
-        }
+        lifecycle.coroutineScope.launch { viewModel.allNouns().collect(nounAdapter::submitList) }
 
         binding.newEntryButton.setOnClickListener {
             findNavController().navigate(R.id.action_nounListFragment_to_NewEntryFragment)

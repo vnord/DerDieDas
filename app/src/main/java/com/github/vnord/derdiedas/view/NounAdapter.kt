@@ -9,7 +9,7 @@ import com.github.vnord.derdiedas.data.Noun
 import com.github.vnord.derdiedas.databinding.NounItemBinding
 
 class NounAdapter(private val onItemClicked: (Noun) -> Unit) :
-    ListAdapter<Noun, NounAdapter.BusStopViewHolder>(DiffCallback) {
+    ListAdapter<Noun, NounAdapter.NounViewHolder>(DiffCallback) {
 
     companion object {
         private val DiffCallback = object : DiffUtil.ItemCallback<Noun>() {
@@ -23,12 +23,12 @@ class NounAdapter(private val onItemClicked: (Noun) -> Unit) :
         }
     }
 
-    override fun onBindViewHolder(holder: BusStopViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NounViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BusStopViewHolder {
-        val viewHolder = BusStopViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NounViewHolder {
+        val viewHolder = NounViewHolder(
             NounItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -42,7 +42,7 @@ class NounAdapter(private val onItemClicked: (Noun) -> Unit) :
         return viewHolder
     }
 
-    class BusStopViewHolder(private var binding: NounItemBinding) :
+    class NounViewHolder(private var binding: NounItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(noun: Noun) {
             binding.genderTextView.text = noun.gender.str

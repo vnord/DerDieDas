@@ -1,4 +1,4 @@
-package com.github.vnord.derdiedas
+package com.github.vnord.derdiedas.viewmodel
 
 import androidx.lifecycle.*
 import com.github.vnord.derdiedas.data.Noun

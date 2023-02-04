@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.github.vnord.derdiedas.DerDieDasApplication
-import com.github.vnord.derdiedas.NounViewModel
-import com.github.vnord.derdiedas.NounViewModelFactory
+import com.github.vnord.derdiedas.viewmodel.NounViewModel
+import com.github.vnord.derdiedas.viewmodel.NounViewModelFactory
 import com.github.vnord.derdiedas.R
 import com.github.vnord.derdiedas.databinding.FragmentStartBinding
 

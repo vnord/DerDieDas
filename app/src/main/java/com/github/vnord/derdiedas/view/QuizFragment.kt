@@ -11,8 +11,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.github.vnord.derdiedas.DerDieDasApplication
-import com.github.vnord.derdiedas.NounViewModel
-import com.github.vnord.derdiedas.NounViewModelFactory
+import com.github.vnord.derdiedas.viewmodel.NounViewModel
+import com.github.vnord.derdiedas.viewmodel.NounViewModelFactory
 import com.github.vnord.derdiedas.data.Gender
 import com.github.vnord.derdiedas.databinding.FragmentQuizBinding
 import com.github.vnord.derdiedas.viewmodel.QuizViewModel
