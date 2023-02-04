@@ -20,8 +20,6 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '17'
-      - run: chmod +x gradlew
-      - run: echo "storeFile=/" > keystore.properties
       - uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
