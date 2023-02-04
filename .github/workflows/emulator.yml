@@ -39,7 +39,8 @@ jobs:
           arch: x86_64
           script: echo "Generated AVD snapshot for caching."
 
-      - uses: reactivecircus/android-emulator-runner@v2
+      - name: run instrumented tests
+        uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
           force-avd-creation: false
