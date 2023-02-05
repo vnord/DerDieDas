@@ -37,6 +37,10 @@ android {
             enableAndroidTestCoverage = true
         }
     }
+
+    testOptions {
+        animationsDisabled = true
+    }
 }
 
 dependencies {
@@ -47,7 +51,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    debugImplementation("androidx.test.ext:junit:1.1.5")
+    debugImplementation("org.assertj:assertj-core:3.4.1")
     debugImplementation("androidx.test.espresso:espresso-core:3.5.1")
     debugImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
     debugImplementation("androidx.navigation:navigation-testing:2.5.3")

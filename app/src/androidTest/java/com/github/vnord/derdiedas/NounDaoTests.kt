@@ -1,7 +1,5 @@
 package com.github.vnord.derdiedas
 
-import android.content.Context
-import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.vnord.derdiedas.data.Gender
@@ -9,47 +7,28 @@ import com.github.vnord.derdiedas.data.Noun
 import com.github.vnord.derdiedas.data.NounRoomDatabase
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.newSingleThreadContext
-import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
+@ExperimentalCoroutinesApi
 class NounDaoTests {
-    private val db by lazy {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        Room.inMemoryDatabaseBuilder(context, NounRoomDatabase::class.java).build()
-    }
-    private val nounDao by lazy { db.nounDao() }
-
-
-    @OptIn(DelicateCoroutinesApi::class)
-    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
-
-    @Before
-    fun setUp() = Dispatchers.setMain(mainThreadSurrogate)
+    private val db = NounRoomDatabase.getDatabase(ApplicationProvider.getApplicationContext())
+    private val nounDao = db.nounDao()
 
     private val nouns = listOf(Noun("Mann", Gender.DER), Noun("Frau", Gender.DIE))
 
-    @After
-    fun closeDb() {
-        db.close()
-        Dispatchers.resetMain() // reset the main dispatcher to the original Main dispatcher
-        mainThreadSurrogate.close()
-    }
+    @Before
+    fun clearDb() = db.clearAllTables()
 
     @Test
     fun insertAndGet() = runTest {
         nouns.forEach { nounDao.insert(it) }
+        // TODO: use assertThat(nounDao.getNouns().first()).contains?? pattern instead
         assertEquals(nouns.sortedBy { it.noun }, nounDao.getNouns().first().sortedBy { it.noun })
         assertEquals(2, nounDao.getNumberOfNouns())
         assertEquals(nouns.sortedBy { it.noun }, nounDao.getEligibleNouns().sortedBy { it.noun })
