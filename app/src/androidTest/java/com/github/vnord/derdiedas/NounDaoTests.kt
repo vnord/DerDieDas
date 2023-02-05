@@ -1,9 +1,12 @@
-package com.github.vnord.derdiedas.data
+package com.github.vnord.derdiedas
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.github.vnord.derdiedas.data.Gender
+import com.github.vnord.derdiedas.data.Noun
+import com.github.vnord.derdiedas.data.NounRoomDatabase
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -71,5 +74,4 @@ class NounDaoTests {
         updates.forEach { nounDao.update(it) }
         assertEquals(updates.sortedBy { it.noun }, nounDao.getNouns().first().sortedBy { it.noun })
     }
-
 }
