@@ -48,10 +48,10 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
-    androidTestImplementation("androidx.navigation:navigation-testing:2.5.3")
-    androidTestImplementation("androidx.fragment:fragment-testing:1.5.5")
+    debugImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    debugImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+    debugImplementation("androidx.navigation:navigation-testing:2.5.3")
+    debugImplementation("androidx.fragment:fragment-testing:1.5.5")
 
     // Navigation libraries
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
