@@ -25,5 +25,4 @@
         android:contentDescription="@string/add_new_entry"
         app:srcCompat="@android:drawable/ic_input_add" />
 
-
 </FrameLayout>
