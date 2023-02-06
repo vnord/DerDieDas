@@ -3,6 +3,7 @@ package com.github.vnord.derdiedas.data
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity(tableName = "noun")
 data class Noun(
@@ -26,6 +27,19 @@ data class Noun(
     val reviewsDone: Int = 0
 )
 
-enum class Gender(val str: String) { DER("der"), DIE("die"), DAS("das") }
+enum class Gender(val str: String) {
+    DER("der"), DIE("die"), DAS("das");
+
+    companion object {
+        fun parse(str: String): Gender {
+            return when (str.lowercase(Locale.ROOT)) {
+                "der" -> DER
+                "die" -> DIE
+                "das" -> DAS
+                else -> throw Exception("no such gender: $str")
+            }
+        }
+    }
+}
 
 const val NUMBER_OF_REVIEWS_REQUIRED = 500 // TODO set to 5 or something when releasing

@@ -10,6 +10,7 @@ import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,7 +21,7 @@ class NounDaoTests {
     private val db = NounRoomDatabase.getDatabase(ApplicationProvider.getApplicationContext())
     private val nounDao = db.nounDao()
 
-    private val nouns = listOf(Noun("Mann", Gender.DER), Noun("Frau", Gender.DIE))
+    private val nouns = arrayOf(Noun("Mann", Gender.DER), Noun("Frau", Gender.DIE))
 
     @Before
     fun clearDb() = db.clearAllTables()
@@ -28,29 +29,30 @@ class NounDaoTests {
     @Test
     fun insertAndGet() = runTest {
         nouns.forEach { nounDao.insert(it) }
-        // TODO: use assertThat(nounDao.getNouns().first()).contains?? pattern instead
-        assertEquals(nouns.sortedBy { it.noun }, nounDao.getNouns().first().sortedBy { it.noun })
-        assertEquals(2, nounDao.getNumberOfNouns())
-        assertEquals(nouns.sortedBy { it.noun }, nounDao.getEligibleNouns().sortedBy { it.noun })
-        assertEquals(2, nounDao.getNumberOfEligibleNouns().first())
-        assertEquals(nouns.first(), nounDao.getNthNoun(1))
-        assertEquals(nouns.last(), nounDao.getNthNoun(0))
+        assertThat(nounDao.getNouns().first()).containsExactlyInAnyOrder(*nouns)
+        assertThat(nounDao.getNumberOfNouns()).isEqualTo(2)
+        assertThat(nounDao.getEligibleNouns()).containsExactly(*nouns)
+        assertThat(nounDao.getNumberOfEligibleNouns().first()).isEqualTo(2)
+        assertThat(nounDao.getNthNoun(1)).isEqualTo(nouns[0])
+        assertThat(nounDao.getNthNoun(0)).isEqualTo(nouns[1])
     }
 
     @Test
     fun delete() = runTest {
         nouns.forEach { nounDao.insert(it) }
         nounDao.delete(nouns[0])
-        assertEquals(nouns[1], nounDao.getNouns().first().single())
+        assertThat(nounDao.getNouns().first()).doesNotContain(nouns[0])
+        assertThat(nounDao.getNumberOfNouns()).isEqualTo(1)
     }
 
     @Test
     fun update() = runTest {
         nouns.forEach { nounDao.insert(it) }
         assertTrue(nouns.none { it.gender == Gender.DAS })
-        val updates = nouns.map { it.copy(gender = Gender.DAS) }
+        val updates = nouns.map { it.copy(gender = Gender.DAS) }.toTypedArray()
         assertTrue(updates.all { it.gender == Gender.DAS })
         updates.forEach { nounDao.update(it) }
         assertEquals(updates.sortedBy { it.noun }, nounDao.getNouns().first().sortedBy { it.noun })
+        assertThat(nounDao.getNouns().first()).containsExactlyInAnyOrder(*updates)
     }
 }
