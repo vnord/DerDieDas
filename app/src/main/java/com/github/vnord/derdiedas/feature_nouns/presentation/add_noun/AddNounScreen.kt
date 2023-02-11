@@ -1,50 +1,55 @@
-package com.github.vnord.derdiedas
+package com.github.vnord.derdiedas.feature_nouns.presentation.add_noun
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.github.vnord.derdiedas.data.Gender
-import com.github.vnord.derdiedas.data.Noun
-import com.github.vnord.derdiedas.data.NounDao
-import com.github.vnord.derdiedas.data.NounRoomDatabase
-import kotlinx.coroutines.launch
+import com.github.vnord.derdiedas.feature_nouns.domain.model.Gender
+import com.github.vnord.derdiedas.feature_nouns.presentation.Screen
 
 @Composable
-fun NewEntryScreen(navController: NavController) {
+fun NewEntryScreen(
+    navController: NavController = rememberNavController(),
+    viewModel: AddNounViewModel = hiltViewModel()
+) {
     Row(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        val nounDao: NounDao = NounRoomDatabase.getDatabase(LocalContext.current).nounDao()
-        val coroutineScope = rememberCoroutineScope()
         val radioOptions = Gender.values()
-        val (selectedGender, onGenderSelected) = remember { mutableStateOf("") }
-        val (noun, onNounChanged) = remember { mutableStateOf("") }
+        val nounTextState = viewModel.nounText.value
+        val selectedGenderState = viewModel.nounGender.value
+
         Column {
             Row(horizontalArrangement = Arrangement.End) {
                 Column {
                     radioOptions.forEach { gender ->
                         Row {
                             RadioButton(
-                                selected = (gender.toString() == selectedGender),
-                                onClick = { onGenderSelected(gender.toString()) }
+                                selected = (gender == selectedGenderState),
+                                onClick = {
+                                    viewModel.onEvent(
+                                        AddNounEvent.SelectedGender(Gender.parse(gender.str))
+                                    )
+                                }
                             )
                             Text(
                                 text = gender.toString(),
@@ -54,8 +59,8 @@ fun NewEntryScreen(navController: NavController) {
                     }
                 }
                 OutlinedTextField(
-                    value = noun,
-                    onValueChange = { onNounChanged(it) },
+                    value = nounTextState,
+                    onValueChange = { viewModel.onEvent(AddNounEvent.EnteredText(it)) },
                     modifier = Modifier
                         .align(CenterVertically)
                         .fillMaxWidth()
@@ -64,9 +69,7 @@ fun NewEntryScreen(navController: NavController) {
             }
             Button(
                 onClick = {
-                    coroutineScope.launch {
-                        nounDao.insert(Noun(noun, Gender.parse(selectedGender)))
-                    }
+                    viewModel.onEvent(AddNounEvent.SaveNoun)
                     navController.navigate(Screen.NounListScreen.route) {
                         popUpTo(Screen.NounListScreen.route) { inclusive = true }
                     }
@@ -74,9 +77,9 @@ fun NewEntryScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 100.dp),
-                enabled = selectedGender != "" && noun != ""
+                enabled = selectedGenderState?.str?.trim() != "" && nounTextState != ""
             ) {
-                Image(imageVector = Icons.Default.Check, contentDescription = "Submit noun")
+                Image(imageVector = Icons.Default.Save, contentDescription = "Save noun")
             }
         }
     }
@@ -85,5 +88,5 @@ fun NewEntryScreen(navController: NavController) {
 @Composable
 @Preview
 fun NewEntryScreenPreview() {
-    NewEntryScreen(navController = rememberNavController())
+    NewEntryScreen()
 }

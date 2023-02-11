@@ -1,4 +1,4 @@
-package com.github.vnord.derdiedas
+package com.github.vnord.derdiedas.feature_nouns.presentation.done
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
