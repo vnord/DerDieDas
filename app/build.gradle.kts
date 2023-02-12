@@ -18,7 +18,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.github.vnord.derdiedas.HiltTestRunner"
     }
 
     buildFeatures {
@@ -35,6 +35,9 @@ android {
 
     testOptions {
         animationsDisabled = true
+        unitTests {
+            isIncludeAndroidResources = true
+        }
     }
 }
 
@@ -80,14 +83,23 @@ dependencies {
     kapt("androidx.hilt:hilt-compiler:1.0.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
-    // test
+    // Local unit tests
+    testImplementation("androidx.test:core:1.5.0")
     testImplementation("junit:junit:4.13.2")
-    debugImplementation("androidx.test.ext:junit:1.1.5")
-    debugImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    testImplementation("androidx.arch.core:core-testing:2.1.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+    testImplementation("com.google.truth:truth:1.1.3")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.4.0-beta01")
+
+    // Instrumentation tests
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.37")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.44.2")
+    androidTestImplementation("junit:junit:4.13.2")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+    androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
+    androidTestImplementation("com.google.truth:truth:1.1.3")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test:core-ktx:1.5.0")
+    androidTestImplementation("androidx.test:runner:1.5.2")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.3.3")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.3.3")
-    debugImplementation("org.assertj:assertj-core:3.4.1")
-    debugImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
-    debugImplementation("androidx.navigation:navigation-testing:2.5.3")
-    debugImplementation("androidx.fragment:fragment-testing:1.5.5")
 }

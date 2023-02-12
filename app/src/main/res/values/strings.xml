@@ -18,4 +18,5 @@
     <string name="i_already_know">I already know</string>
     <string name="der_artikel">Der Artikel</string>
     <string name="no_more_items">No more items to review; well done!</string>
+    <string name="save_noun">Save noun</string>
 </resources>

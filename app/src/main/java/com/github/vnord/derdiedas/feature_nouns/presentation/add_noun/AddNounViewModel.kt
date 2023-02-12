@@ -30,8 +30,8 @@ class AddNounViewModel @Inject constructor(
         )
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = AddNounUiState.Empty
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = AddNounUiState()
     )
 
     fun selectGender(gender: Gender) {

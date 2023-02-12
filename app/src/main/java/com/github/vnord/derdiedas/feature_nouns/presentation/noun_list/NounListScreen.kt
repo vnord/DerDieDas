@@ -36,7 +36,7 @@ fun NounListScreen(
 
     NounListScreen(
         uiState = uiState,
-        onClickNewButton = { navController.navigate(Screen.AddEntryScreen.route) }
+        onClickNewButton = { navController.navigate(Screen.AddNounScreen.route) }
     )
 }
 

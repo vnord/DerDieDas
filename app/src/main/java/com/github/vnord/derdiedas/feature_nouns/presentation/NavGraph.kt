@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.github.vnord.derdiedas.feature_nouns.presentation.Screen.AddEntryScreen
+import com.github.vnord.derdiedas.feature_nouns.presentation.Screen.AddNounScreen
 import com.github.vnord.derdiedas.feature_nouns.presentation.Screen.DoneScreen
 import com.github.vnord.derdiedas.feature_nouns.presentation.Screen.HomeScreen
 import com.github.vnord.derdiedas.feature_nouns.presentation.Screen.NounListScreen
@@ -30,7 +30,7 @@ fun SetupNavGraph(navController: NavHostController = rememberNavController()) {
             NounListScreen(navController = navController)
         }
         composable(
-            route = AddEntryScreen.route
+            route = AddNounScreen.route
         ) {
             AddNounScreen(navController = navController)
         }

@@ -17,11 +17,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.github.vnord.derdiedas.R
+import com.github.vnord.derdiedas.core.util.TestTags
 import com.github.vnord.derdiedas.feature_nouns.domain.model.Gender
 import com.github.vnord.derdiedas.util.rememberStateWithLifecycle
 
@@ -57,7 +61,7 @@ private fun AddNounScreen(
     ) {
         Column {
             Row(horizontalArrangement = Arrangement.End) {
-                Column {
+                Column(modifier = Modifier.testTag(TestTags.GENDER_BUTTONS)) {
                     Gender.values().forEach { gender ->
                         Row {
                             RadioButton(
@@ -88,9 +92,13 @@ private fun AddNounScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 100.dp),
-                enabled = uiState.selectedNounGender?.str?.trim() != "" && uiState.nounText != ""
+                enabled = !uiState.selectedNounGender?.str?.trim().isNullOrBlank() &&
+                    uiState.nounText != ""
             ) {
-                Image(imageVector = Icons.Default.Save, contentDescription = "Save noun")
+                Image(
+                    imageVector = Icons.Default.Save,
+                    contentDescription = stringResource(R.string.save_noun)
+                )
             }
         }
     }
@@ -100,7 +108,7 @@ private fun AddNounScreen(
 @Preview(showBackground = true)
 fun NewEntryScreenPreview() {
     AddNounScreen(
-        uiState = AddNounUiState.Empty,
+        uiState = AddNounUiState(),
         onEnteredNounText = {},
         onSelectedGender = {},
         onSave = {}
