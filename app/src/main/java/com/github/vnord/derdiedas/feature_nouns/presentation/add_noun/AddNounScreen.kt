@@ -14,6 +14,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,34 +23,46 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.github.vnord.derdiedas.feature_nouns.domain.model.Gender
-import com.github.vnord.derdiedas.feature_nouns.presentation.Screen
+import com.github.vnord.derdiedas.util.rememberStateWithLifecycle
 
 @Composable
-fun NewEntryScreen(
+fun AddNounScreen(
     navController: NavController = rememberNavController(),
     viewModel: AddNounViewModel = hiltViewModel()
+) {
+    val uiState by rememberStateWithLifecycle(viewModel.uiState)
+
+    AddNounScreen(
+        uiState = uiState,
+        onEnteredNounText = viewModel::enterNounText,
+        onSelectedGender = viewModel::selectGender,
+        onSave = {
+            viewModel.onSave()
+            navController.navigateUp()
+        }
+    )
+}
+
+@Composable
+private fun AddNounScreen(
+    uiState: AddNounUiState,
+    onEnteredNounText: (String) -> Unit,
+    onSelectedGender: (Gender) -> Unit,
+    onSave: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        val radioOptions = Gender.values()
-        val nounTextState = viewModel.nounText.value
-        val selectedGenderState = viewModel.nounGender.value
-
         Column {
             Row(horizontalArrangement = Arrangement.End) {
                 Column {
-                    radioOptions.forEach { gender ->
+                    Gender.values().forEach { gender ->
                         Row {
                             RadioButton(
-                                selected = (gender == selectedGenderState),
-                                onClick = {
-                                    viewModel.onEvent(
-                                        AddNounEvent.SelectedGender(Gender.parse(gender.str))
-                                    )
-                                }
+                                selected = (gender == uiState.selectedNounGender),
+                                onClick = { onSelectedGender(gender) }
                             )
                             Text(
                                 text = gender.toString(),
@@ -59,8 +72,9 @@ fun NewEntryScreen(
                     }
                 }
                 OutlinedTextField(
-                    value = nounTextState,
-                    onValueChange = { viewModel.onEvent(AddNounEvent.EnteredText(it)) },
+                    value = uiState.nounText,
+                    onValueChange = { onEnteredNounText(it) },
+                    singleLine = true,
                     modifier = Modifier
                         .align(CenterVertically)
                         .fillMaxWidth()
@@ -69,15 +83,12 @@ fun NewEntryScreen(
             }
             Button(
                 onClick = {
-                    viewModel.onEvent(AddNounEvent.SaveNoun)
-                    navController.navigate(Screen.NounListScreen.route) {
-                        popUpTo(Screen.NounListScreen.route) { inclusive = true }
-                    }
+                    onSave()
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 100.dp),
-                enabled = selectedGenderState?.str?.trim() != "" && nounTextState != ""
+                enabled = uiState.selectedNounGender?.str?.trim() != "" && uiState.nounText != ""
             ) {
                 Image(imageVector = Icons.Default.Save, contentDescription = "Save noun")
             }
@@ -86,7 +97,12 @@ fun NewEntryScreen(
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 fun NewEntryScreenPreview() {
-    NewEntryScreen()
+    AddNounScreen(
+        uiState = AddNounUiState.Empty,
+        onEnteredNounText = {},
+        onSelectedGender = {},
+        onSave = {}
+    )
 }

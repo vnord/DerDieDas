@@ -1,7 +1,5 @@
 package com.github.vnord.derdiedas.feature_nouns.presentation.add_noun
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.vnord.derdiedas.feature_nouns.domain.model.Gender
@@ -9,41 +7,48 @@ import com.github.vnord.derdiedas.feature_nouns.domain.model.Noun
 import com.github.vnord.derdiedas.feature_nouns.domain.use_case.NounUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class AddNounViewModel @Inject constructor(
     private val nounUseCases: NounUseCases,
 ) : ViewModel() {
-    private val _nounGender = mutableStateOf<Gender?>(null)
-    val nounGender: State<Gender?> = _nounGender
+    private val selectedNounGender = MutableStateFlow<Gender?>(null)
+    private val nounText = MutableStateFlow("")
 
-    private val _nounText = mutableStateOf("")
-    val nounText: State<String> = _nounText
+    val uiState: StateFlow<AddNounUiState> = combine(
+        selectedNounGender, nounText
+    ) { selectedNounGender, nounText ->
+        AddNounUiState(
+            selectedNounGender = selectedNounGender,
+            nounText = nounText
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = AddNounUiState.Empty
+    )
 
-    private val _eventFlow = MutableSharedFlow<UiEvent>()
-    val eventFlow = _eventFlow.asSharedFlow()
-
-    fun onEvent(event: AddNounEvent) {
-        when (event) {
-            is AddNounEvent.SaveNoun -> viewModelScope.launch {
-                nounUseCases.addNoun(
-                    Noun(
-                        noun = nounText.value.trim(),
-                        gender = nounGender.value
-                            ?: Gender.DAS // TODO: probably shouldn't default when null
-                    )
-                )
-                _eventFlow.emit(UiEvent.SaveNoun)
-            }
-            is AddNounEvent.EnteredText -> _nounText.value = event.value
-            is AddNounEvent.SelectedGender -> _nounGender.value = event.value
-        }
+    fun selectGender(gender: Gender) {
+        selectedNounGender.value = gender
     }
 
-    sealed class UiEvent {
-        object SaveNoun : UiEvent()
+    fun enterNounText(text: String) {
+        nounText.value = text
+    }
+
+    fun onSave() = viewModelScope.launch {
+        nounUseCases.addNoun(
+            Noun(
+                noun = nounText.value.trim(),
+                gender = selectedNounGender.value
+                    ?: Gender.DAS // TODO: probably shouldn't default when null
+            )
+        )
     }
 }

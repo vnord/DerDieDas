@@ -5,12 +5,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.github.vnord.derdiedas.feature_nouns.presentation.Screen.AddEntryScreen
 import com.github.vnord.derdiedas.feature_nouns.presentation.Screen.DoneScreen
 import com.github.vnord.derdiedas.feature_nouns.presentation.Screen.HomeScreen
-import com.github.vnord.derdiedas.feature_nouns.presentation.Screen.NewEntryScreen
 import com.github.vnord.derdiedas.feature_nouns.presentation.Screen.NounListScreen
 import com.github.vnord.derdiedas.feature_nouns.presentation.Screen.QuizScreen
-import com.github.vnord.derdiedas.feature_nouns.presentation.add_noun.NewEntryScreen
+import com.github.vnord.derdiedas.feature_nouns.presentation.add_noun.AddNounScreen
 import com.github.vnord.derdiedas.feature_nouns.presentation.done.DoneScreen
 import com.github.vnord.derdiedas.feature_nouns.presentation.home.HomeScreen
 import com.github.vnord.derdiedas.feature_nouns.presentation.noun_list.NounListScreen
@@ -30,9 +30,9 @@ fun SetupNavGraph(navController: NavHostController = rememberNavController()) {
             NounListScreen(navController = navController)
         }
         composable(
-            route = NewEntryScreen.route
+            route = AddEntryScreen.route
         ) {
-            NewEntryScreen(navController = navController)
+            AddNounScreen(navController = navController)
         }
         composable(
             route = QuizScreen.route

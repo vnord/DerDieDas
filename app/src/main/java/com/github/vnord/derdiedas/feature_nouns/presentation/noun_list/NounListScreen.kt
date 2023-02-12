@@ -13,6 +13,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -21,27 +22,41 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.github.vnord.derdiedas.feature_nouns.domain.model.Gender
 import com.github.vnord.derdiedas.feature_nouns.domain.model.Noun
 import com.github.vnord.derdiedas.feature_nouns.presentation.Screen
+import com.github.vnord.derdiedas.util.rememberStateWithLifecycle
 
 @Composable
 fun NounListScreen(
     navController: NavController = rememberNavController(),
     viewModel: NounListViewModel = hiltViewModel()
 ) {
-    val nounList = viewModel.state.value.nouns
+    val uiState by rememberStateWithLifecycle(viewModel.uiState)
+
+    NounListScreen(
+        uiState = uiState,
+        onClickNewButton = { navController.navigate(Screen.AddEntryScreen.route) }
+    )
+}
+
+@Composable
+private fun NounListScreen(
+    uiState: NounListUiState,
+    onClickNewButton: () -> Unit,
+) {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            items(items = nounList) {
+            items(items = uiState.nouns) {
                 NounEntry(it)
                 Divider(Modifier.padding(5.dp))
             }
         }
         Button(
-            onClick = { navController.navigate(Screen.NewEntryScreen.route) },
+            onClick = { onClickNewButton() },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(16.dp)
@@ -63,7 +78,18 @@ fun NounEntry(noun: Noun) {
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 fun NounListScreenPreview() {
-    NounListScreen()
+    val nouns = List(20) {
+        Noun(
+            noun = listOf("Frau", "Mann", "FooBar", "Whatever").random(),
+            gender = Gender.values().random()
+        )
+    }
+    NounListScreen(
+        uiState = NounListUiState(
+            nouns = nouns
+        ),
+        onClickNewButton = {}
+    )
 }
