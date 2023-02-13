@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DerDieDas">
         <activity
-            android:name="com.github.vnord.derdiedas.feature.nouns.presentation.MainActivity"
+            android:name="com.github.vnord.derdiedas.presentation.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.DerDieDas">
             <intent-filter>

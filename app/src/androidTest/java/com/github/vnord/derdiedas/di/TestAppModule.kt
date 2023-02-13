@@ -2,12 +2,12 @@ package com.github.vnord.derdiedas.di
 
 import android.app.Application
 import androidx.room.Room
-import com.github.vnord.derdiedas.feature.nouns.data.source.NounDatabase
-import com.github.vnord.derdiedas.feature.nouns.data.repository.NounRepositoryImpl
-import com.github.vnord.derdiedas.feature.nouns.domain.repository.NounRepository
-import com.github.vnord.derdiedas.feature.nouns.domain.usecase.AddNoun
-import com.github.vnord.derdiedas.feature.nouns.domain.usecase.GetNouns
-import com.github.vnord.derdiedas.feature.nouns.domain.usecase.NounUseCases
+import com.github.vnord.derdiedas.data.source.NounDatabase
+import com.github.vnord.derdiedas.data.repository.NounRepositoryImpl
+import com.github.vnord.derdiedas.domain.repository.NounRepository
+import com.github.vnord.derdiedas.domain.usecase.AddNoun
+import com.github.vnord.derdiedas.domain.usecase.GetNouns
+import com.github.vnord.derdiedas.domain.usecase.NounUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
