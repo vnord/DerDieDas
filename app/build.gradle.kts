@@ -44,12 +44,18 @@ dependencies {
     implementation("com.google.android.material:material:1.8.0")
     implementation("androidx.compose.ui:ui:1.3.3")
     implementation("androidx.compose.material:material:1.3.1")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.3.3")
     implementation("androidx.compose.ui:ui-tooling-preview:1.3.3")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
+    implementation("androidx.activity:activity-compose:1.6.1")
 
     // Compose
+    implementation("androidx.compose.foundation:foundation:1.3.1")
+    implementation("androidx.compose.runtime:runtime-livedata:1.3.3")
     implementation("androidx.compose.material:material-icons-core:1.3.1")
     implementation("androidx.compose.material:material-icons-extended:1.3.1")
     implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")

@@ -4,34 +4,35 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.vnord.derdiedas.domain.model.Gender
 import com.github.vnord.derdiedas.domain.model.Noun
-import com.github.vnord.derdiedas.domain.usecase.NounUseCases
+import com.github.vnord.derdiedas.domain.usecase.UseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class AddNounViewModel @Inject constructor(
-    private val nounUseCases: NounUseCases,
+    private val useCases: UseCases,
 ) : ViewModel() {
     private val selectedNounGender = MutableStateFlow<Gender?>(null)
     private val nounText = MutableStateFlow("")
 
     val uiState: StateFlow<AddNounUiState> = combine(
-        selectedNounGender, nounText
+        selectedNounGender,
+        nounText,
     ) { selectedNounGender, nounText ->
         AddNounUiState(
             selectedNounGender = selectedNounGender,
-            nounText = nounText
+            nounText = nounText,
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),
-        initialValue = AddNounUiState()
+        initialValue = AddNounUiState(),
     )
 
     fun selectGender(gender: Gender) {
@@ -43,12 +44,12 @@ class AddNounViewModel @Inject constructor(
     }
 
     fun onSave() = viewModelScope.launch {
-        nounUseCases.addNoun(
+        useCases.addNoun(
             Noun(
                 noun = nounText.value.trim(),
                 gender = selectedNounGender.value
-                    ?: Gender.DAS // TODO: probably shouldn't default when null
-            )
+                    ?: Gender.DAS, // TODO: probably shouldn't default when null
+            ),
         )
     }
 }

@@ -2,12 +2,12 @@ package com.github.vnord.derdiedas.di
 
 import android.app.Application
 import androidx.room.Room
-import com.github.vnord.derdiedas.data.source.NounDatabase
 import com.github.vnord.derdiedas.data.repository.NounRepositoryImpl
+import com.github.vnord.derdiedas.data.source.NounDatabase
 import com.github.vnord.derdiedas.domain.repository.NounRepository
 import com.github.vnord.derdiedas.domain.usecase.AddNoun
 import com.github.vnord.derdiedas.domain.usecase.GetNouns
-import com.github.vnord.derdiedas.domain.usecase.NounUseCases
+import com.github.vnord.derdiedas.domain.usecase.UseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,6 +29,6 @@ object TestAppModule {
 
     @Provides
     @Singleton
-    fun provideNounUseCases(repository: NounRepository): NounUseCases =
-        NounUseCases(getNouns = GetNouns(repository), addNoun = AddNoun(repository))
+    fun provideNounUseCases(repository: NounRepository): UseCases =
+        UseCases(getNouns = GetNouns(repository), addNoun = AddNoun(repository))
 }

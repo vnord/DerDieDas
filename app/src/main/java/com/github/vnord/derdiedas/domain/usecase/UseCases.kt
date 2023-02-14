@@ -1,6 +1,6 @@
 package com.github.vnord.derdiedas.domain.usecase
 
-data class NounUseCases(
+data class UseCases(
     val addNoun: AddNoun,
-    val getNouns: GetNouns
+    val getNouns: GetNouns,
 )
