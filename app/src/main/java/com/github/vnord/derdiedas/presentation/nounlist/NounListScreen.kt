@@ -24,10 +24,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.github.vnord.derdiedas.R
+import com.github.vnord.derdiedas.core.util.rememberStateWithLifecycle
 import com.github.vnord.derdiedas.domain.model.Gender
 import com.github.vnord.derdiedas.domain.model.Noun
 import com.github.vnord.derdiedas.presentation.Screen
-import com.github.vnord.derdiedas.util.rememberStateWithLifecycle
 
 @Composable
 fun NounListScreen(
@@ -74,7 +74,7 @@ private fun NounListScreen(
 @Composable
 fun NounEntry(noun: Noun) {
     Row(modifier = Modifier.fillMaxSize()) {
-        Text(text = noun.gender.toString(), textAlign = TextAlign.Start)
+        Text(text = noun.gender.str, textAlign = TextAlign.Start)
         Text(text = " ")
         Text(text = noun.noun, textAlign = TextAlign.End)
     }

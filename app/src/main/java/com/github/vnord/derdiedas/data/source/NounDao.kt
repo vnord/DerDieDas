@@ -13,5 +13,8 @@ interface NounDao {
     suspend fun insertNoun(noun: Noun)
 
     @Query("SELECT * FROM noun")
-    fun getNouns(): Flow<List<Noun>>
+    fun getAllNouns(): Flow<List<Noun>>
+
+    @Query("SELECT * FROM noun LIMIT :limit")
+    fun getNouns(limit: Int): Flow<List<Noun>>
 }

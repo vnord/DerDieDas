@@ -3,7 +3,6 @@ package com.github.vnord.derdiedas.domain.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.Locale
 
 @Entity(tableName = "noun")
 data class Noun(
@@ -16,16 +15,5 @@ data class Noun(
 )
 
 enum class Gender(val str: String) {
-    DER("der"), DIE("die"), DAS("das");
-
-    companion object {
-        fun parse(str: String): Gender {
-            return when (str.lowercase(Locale.ROOT)) {
-                "der" -> DER
-                "die" -> DIE
-                "das" -> DAS
-                else -> throw Exception("no such gender: $str")
-            }
-        }
-    }
+    MASCULINE("der"), FEMININE("die"), NEUTER("das")
 }

@@ -26,8 +26,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.github.vnord.derdiedas.R
 import com.github.vnord.derdiedas.core.util.TestTags
+import com.github.vnord.derdiedas.core.util.rememberStateWithLifecycle
 import com.github.vnord.derdiedas.domain.model.Gender
-import com.github.vnord.derdiedas.util.rememberStateWithLifecycle
 
 @Composable
 fun AddNounScreen(
@@ -69,7 +69,7 @@ private fun AddNounScreen(
                                 onClick = { onSelectedGender(gender) },
                             )
                             Text(
-                                text = gender.toString(),
+                                text = gender.str,
                                 modifier = Modifier.align(CenterVertically),
                             )
                         }

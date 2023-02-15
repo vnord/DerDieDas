@@ -6,6 +6,7 @@ import com.github.vnord.derdiedas.data.repository.NounRepositoryImpl
 import com.github.vnord.derdiedas.data.source.NounDatabase
 import com.github.vnord.derdiedas.domain.repository.NounRepository
 import com.github.vnord.derdiedas.domain.usecase.AddNoun
+import com.github.vnord.derdiedas.domain.usecase.GetNextNoun
 import com.github.vnord.derdiedas.domain.usecase.GetNouns
 import com.github.vnord.derdiedas.domain.usecase.UseCases
 import dagger.Module
@@ -28,9 +29,9 @@ object AppModule {
     fun provideNounRepository(db: NounDatabase): NounRepository = NounRepositoryImpl(db.nounDao)
 
     @Provides
-    @Singleton
     fun provideNounUseCases(repository: NounRepository): UseCases = UseCases(
         addNoun = AddNoun(repository),
         getNouns = GetNouns(repository),
+        getNextNoun = GetNextNoun(repository),
     )
 }

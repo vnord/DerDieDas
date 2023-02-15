@@ -44,12 +44,12 @@ class AddNounViewModel @Inject constructor(
     }
 
     fun onSave() = viewModelScope.launch {
-        useCases.addNoun(
+        val noun = selectedNounGender.value?.let { gender ->
             Noun(
                 noun = nounText.value.trim(),
-                gender = selectedNounGender.value
-                    ?: Gender.DAS, // TODO: probably shouldn't default when null
-            ),
-        )
+                gender = gender,
+            )
+        }
+        useCases.addNoun(noun)
     }
 }
