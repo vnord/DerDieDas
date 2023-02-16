@@ -5,7 +5,7 @@ import com.github.vnord.derdiedas.domain.repository.NounRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
-class GetNextNoun(val repository: NounRepository, private val limit: Int = 5) {
+class GetNextNoun(val repository: NounRepository, private val limit: Int = 10) {
     private var nouns: MutableList<Noun>? = null
 
     init {
