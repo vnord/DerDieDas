@@ -29,6 +29,7 @@ object AppModule {
     fun provideNounRepository(db: NounDatabase): NounRepository = NounRepositoryImpl(db.nounDao)
 
     @Provides
+    @Singleton
     fun provideNounUseCases(repository: NounRepository): UseCases = UseCases(
         addNoun = AddNoun(repository),
         getNouns = GetNouns(repository),

@@ -44,6 +44,7 @@ dependencies {
     implementation("com.google.android.material:material:1.8.0")
     implementation("androidx.compose.ui:ui:1.3.3")
     implementation("androidx.compose.material:material:1.3.1")
+    implementation("androidx.test.espresso:espresso-core:3.5.1")
     debugImplementation("androidx.compose.ui:ui-tooling:1.3.3")
     implementation("androidx.compose.ui:ui-tooling-preview:1.3.3")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")

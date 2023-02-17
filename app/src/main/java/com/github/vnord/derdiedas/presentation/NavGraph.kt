@@ -11,6 +11,7 @@ import com.github.vnord.derdiedas.presentation.Screen.HomeScreen
 import com.github.vnord.derdiedas.presentation.Screen.NounListScreen
 import com.github.vnord.derdiedas.presentation.Screen.QuizScreen
 import com.github.vnord.derdiedas.presentation.addnoun.AddNounScreen
+import com.github.vnord.derdiedas.presentation.done.DoneScreen
 import com.github.vnord.derdiedas.presentation.home.HomeScreen
 import com.github.vnord.derdiedas.presentation.nounlist.NounListScreen
 import com.github.vnord.derdiedas.presentation.quiz.QuizScreen
@@ -36,12 +37,12 @@ fun SetupNavGraph(navController: NavHostController = rememberNavController()) {
         composable(
             route = QuizScreen.route,
         ) {
-            QuizScreen()
+            QuizScreen(navController = navController)
         }
         composable(
             route = DoneScreen.route,
         ) {
-            QuizScreen()
+            DoneScreen()
         }
     }
 }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -23,7 +24,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.github.vnord.derdiedas.core.util.rememberStateWithLifecycle
 import com.github.vnord.derdiedas.domain.model.Gender
+import com.github.vnord.derdiedas.presentation.Screen
 import com.github.vnord.derdiedas.presentation.quiz.components.GenderButtons
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun QuizScreen(
@@ -31,6 +34,17 @@ fun QuizScreen(
     viewModel: QuizViewModel = hiltViewModel(),
 ) {
     val uiState by rememberStateWithLifecycle(viewModel.uiState)
+
+    LaunchedEffect(key1 = true) {
+        viewModel.eventFLow.collectLatest { event ->
+            when (event) {
+                is UiEvent.NavigateToDone -> navController.navigate(Screen.DoneScreen.route) {
+                    popUpTo(Screen.QuizScreen.route) { inclusive = true }
+                }
+                null -> {}
+            }
+        }
+    }
 
     QuizScreen(
         uiState = uiState,

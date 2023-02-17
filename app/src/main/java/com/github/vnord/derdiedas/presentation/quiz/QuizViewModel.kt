@@ -9,8 +9,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -48,12 +48,17 @@ class QuizViewModel @Inject constructor(
 
     private fun Gender.isCorrect() = this == currentNounState.value?.gender
 
-    private val quizQueue = mutableListOf<Noun>()
+    private val _eventFlow = MutableStateFlow<UiEvent?>(null)
+    val eventFLow = _eventFlow.asSharedFlow()
 
     init {
         viewModelScope.launch {
-            quizQueue.addAll(useCases.getNouns().first())
-            currentNounState.value = useCases.getNextNoun()
+            val firstNoun = useCases.getNextNoun.getFirstNoun()
+            if (firstNoun == null) {
+                _eventFlow.emit(UiEvent.NavigateToDone)
+            } else {
+                currentNounState.value = firstNoun
+            }
         }
     }
 
@@ -72,6 +77,9 @@ class QuizViewModel @Inject constructor(
         genderButtonStates.value = Gender.values().associateWith { GenderButtonState.Normal }
         viewModelScope.launch {
             currentNounState.value = useCases.getNextNoun()
+            if (currentNounState.value == null) {
+                _eventFlow.emit(UiEvent.NavigateToDone)
+            }
         }
     }
 }
@@ -79,4 +87,8 @@ class QuizViewModel @Inject constructor(
 sealed class GenderButtonState {
     object Normal : GenderButtonState()
     object Eliminated : GenderButtonState()
+}
+
+sealed class UiEvent {
+    object NavigateToDone : UiEvent()
 }

@@ -20,28 +20,28 @@ import com.github.vnord.derdiedas.R
 import com.github.vnord.derdiedas.presentation.Screen
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController = rememberNavController()) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(16.dp),
     ) {
         Button(
             onClick = { navController.navigate(Screen.NounListScreen.route) },
-            modifier = Modifier.align(Alignment.TopEnd)
+            modifier = Modifier.align(Alignment.TopEnd),
         ) {
             Image(
                 imageVector = Icons.Default.List,
-                contentDescription = stringResource(R.string.noun_list)
+                contentDescription = stringResource(R.string.noun_list),
             )
         }
         Button(
-            onClick = { navController.navigate(Screen.DoneScreen.route) },
-            modifier = Modifier.align(Alignment.BottomCenter)
+            onClick = { navController.navigate(Screen.QuizScreen.route) },
+            modifier = Modifier.align(Alignment.BottomCenter),
         ) {
             Image(
                 imageVector = Icons.Default.PlayArrow,
-                contentDescription = "Start quiz"
+                contentDescription = stringResource(id = R.string.start_quiz),
             )
         }
     }
@@ -50,5 +50,5 @@ fun HomeScreen(navController: NavController) {
 @Composable
 @Preview
 fun HomeScreenPreview() {
-    HomeScreen(navController = rememberNavController())
+    HomeScreen()
 }
