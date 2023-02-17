@@ -11,41 +11,47 @@ on:
 jobs:
   connected-android-test:
     runs-on: buildjet-4vcpu-ubuntu-2204
+    env:
+      JAVA_TOOL_OPTIONS: -Xmx4g -XX:+UseParallelGC
     steps:
       - uses: actions/checkout@v3
+      - uses: gradle/wrapper-validation-action@v1
 
-      - name: Gradle cache
-        uses: gradle/gradle-build-action@v2
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '18'
 
-      - name: AVD cache
-        uses: actions/cache@v3
+      - uses: actions/cache@v3
         id: avd-cache
         with:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-31
+          key: avd
 
       - name: create AVD and generate snapshot for caching
         if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 31
-          arch: x86_64
-          target: google_apis
+          api-level: 30
+          arch: x86
+          target: aosp_atd
+          profile: Galaxy Nexus
           force-avd-creation: false
-          emulator-options: -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back -no-snapshot none
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: false
           script: echo "Generated AVD snapshot for caching."
 
       - name: run instrumented tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 31
-          arch: x86_64
-          target: google_apis
+          api-level: 30
+          arch: x86
+          target: aosp_atd
+          profile: Galaxy Nexus
           force-avd-creation: false
-          emulator-options: -no-snapshot -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: ./gradlew createDebugCoverageReport
 
