@@ -70,6 +70,9 @@ dependencies {
     kapt("androidx.room:room-compiler:2.5.0")
     implementation("androidx.room:room-ktx:2.5.0")
 
+    // CSV
+    implementation("com.opencsv:opencsv:5.5.2")
+
     // Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.45")
     kapt("com.google.dagger:hilt-android-compiler:2.45")
