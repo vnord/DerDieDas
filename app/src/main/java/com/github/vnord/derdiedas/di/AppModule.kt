@@ -1,7 +1,6 @@
 package com.github.vnord.derdiedas.di
 
 import android.app.Application
-import androidx.room.Room
 import com.github.vnord.derdiedas.data.repository.NounRepositoryImpl
 import com.github.vnord.derdiedas.data.source.NounDatabase
 import com.github.vnord.derdiedas.domain.repository.NounRepository
@@ -13,6 +12,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import javax.inject.Singleton
 
 @Module
@@ -21,8 +22,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideNounDatabase(app: Application): NounDatabase =
-        Room.databaseBuilder(app, NounDatabase::class.java, NounDatabase.DATABASE_NAME).build()
+    fun provideNounDatabase(app: Application): NounDatabase = runBlocking(Dispatchers.IO) {
+        NounDatabase.create(app.applicationContext)
+    }
 
     @Provides
     @Singleton
