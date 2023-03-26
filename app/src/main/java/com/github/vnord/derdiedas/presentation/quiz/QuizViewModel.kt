@@ -1,9 +1,10 @@
 package com.github.vnord.derdiedas.presentation.quiz
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.vnord.derdiedas.domain.model.Gender
-import com.github.vnord.derdiedas.domain.model.Noun
+import com.github.vnord.derdiedas.data.entity.Noun
+import com.github.vnord.derdiedas.domain.model.Categories
 import com.github.vnord.derdiedas.domain.usecase.UseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,10 +19,11 @@ import javax.inject.Inject
 @HiltViewModel
 class QuizViewModel @Inject constructor(
     private val useCases: UseCases,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val currentNounState = MutableStateFlow<Noun?>(null)
-    private val genderButtonStates = MutableStateFlow<Map<Gender, GenderButtonState>>(
-        Gender.values().associateWith { GenderButtonState.Normal },
+    private val genderButtonStates = MutableStateFlow<Map<Noun.Gender, GenderButtonState>>(
+        Noun.Gender.values().associateWith { GenderButtonState.Normal },
     )
     private val currentNounDone: StateFlow<Boolean> = combine(
         genderButtonStates,
@@ -36,7 +38,7 @@ class QuizViewModel @Inject constructor(
         currentNounDone,
     ) { currentNounState, genderButtonStates, currentNounDone ->
         QuizUiState(
-            currentNounState?.noun ?: "",
+            currentNounState?.nounString ?: "",
             genderButtonStates,
             currentNounDone,
         )
@@ -46,14 +48,21 @@ class QuizViewModel @Inject constructor(
         initialValue = QuizUiState(),
     )
 
-    private fun Gender.isCorrect() = this == currentNounState.value?.gender
+    private fun Noun.Gender.isCorrect() = this == currentNounState.value?.gender
 
     private val _eventFlow = MutableStateFlow<UiEvent?>(null)
     val eventFLow = _eventFlow.asSharedFlow()
 
     init {
         viewModelScope.launch {
-            val firstNoun = useCases.getNextNoun.getFirstNoun()
+            val firstNoun =
+                useCases.getNextNoun.getFirstNoun(
+                    category = Categories.fromString(
+                        savedStateHandle.get<String>(
+                            "category",
+                        ) ?: "My Nouns",
+                    ), /* TODO: this isn't very neat */
+                )
             if (firstNoun == null) {
                 _eventFlow.emit(UiEvent.NavigateToDone)
             } else {
@@ -62,10 +71,10 @@ class QuizViewModel @Inject constructor(
         }
     }
 
-    fun genderButtonClicked(gender: Gender) {
+    fun genderButtonClicked(gender: Noun.Gender) {
         if (gender.isCorrect()) {
             genderButtonStates.value =
-                Gender.values().associateWith { GenderButtonState.Eliminated }
+                Noun.Gender.values().associateWith { GenderButtonState.Eliminated }
                     .plus(gender to GenderButtonState.Normal)
         } else {
             genderButtonStates.value =
@@ -74,7 +83,7 @@ class QuizViewModel @Inject constructor(
     }
 
     fun clickNext() {
-        genderButtonStates.value = Gender.values().associateWith { GenderButtonState.Normal }
+        genderButtonStates.value = Noun.Gender.values().associateWith { GenderButtonState.Normal }
         viewModelScope.launch {
             currentNounState.value = useCases.getNextNoun()
             if (currentNounState.value == null) {

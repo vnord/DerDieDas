@@ -11,12 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.github.vnord.derdiedas.domain.model.Gender
+import com.github.vnord.derdiedas.data.entity.Noun
 
 @Composable
 fun GenderButtons(
-    isGenderButtonEnabled: (Gender) -> Boolean,
-    onClickGenderButton: (Gender) -> Unit,
+    isGenderButtonEnabled: (Noun.Gender) -> Boolean,
+    onClickGenderButton: (Noun.Gender) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -25,7 +25,7 @@ fun GenderButtons(
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(30.dp),
     ) {
-        Gender.values().map { gender ->
+        Noun.Gender.values().map { gender ->
             Button(
                 onClick = { onClickGenderButton(gender) },
                 modifier = Modifier.fillMaxWidth(0.4f).align(CenterHorizontally),

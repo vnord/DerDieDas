@@ -1,8 +1,7 @@
 package com.github.vnord.derdiedas.domain.usecase
 
+import com.github.vnord.derdiedas.data.entity.Noun
 import com.github.vnord.derdiedas.data.repository.FakeNounRepository
-import com.github.vnord.derdiedas.domain.model.Gender
-import com.github.vnord.derdiedas.domain.model.Noun
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -22,8 +21,8 @@ class AddNounTest {
     @Test
     fun `add noun`(): Unit = runBlocking {
         // Again, these tests will be more relevant once we have more business logic
-        val noun = Noun("Mann", Gender.MASCULINE)
+        val noun = Noun("Mann", Noun.Gender.MASCULINE)
         addNoun(noun)
-        assertThat(fakeRepository.getNouns().first().single()).isEqualTo(noun)
+        assertThat(fakeRepository.getNouns(fakeRepository.category, limit = 5).first().single()).isEqualTo(noun)
     }
 }

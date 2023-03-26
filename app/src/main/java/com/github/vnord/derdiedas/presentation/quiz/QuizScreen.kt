@@ -23,7 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.github.vnord.derdiedas.core.util.rememberStateWithLifecycle
-import com.github.vnord.derdiedas.domain.model.Gender
+import com.github.vnord.derdiedas.data.entity.Noun
 import com.github.vnord.derdiedas.presentation.Screen
 import com.github.vnord.derdiedas.presentation.quiz.components.GenderButtons
 import kotlinx.coroutines.flow.collectLatest
@@ -56,7 +56,7 @@ fun QuizScreen(
 @Composable
 private fun QuizScreen(
     uiState: QuizUiState,
-    onClickGenderButton: (Gender) -> Unit,
+    onClickGenderButton: (Noun.Gender) -> Unit,
     onClickNext: () -> Unit,
 ) {
     Box(

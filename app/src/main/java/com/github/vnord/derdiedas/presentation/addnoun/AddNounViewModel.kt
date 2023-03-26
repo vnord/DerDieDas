@@ -2,8 +2,7 @@ package com.github.vnord.derdiedas.presentation.addnoun
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.vnord.derdiedas.domain.model.Gender
-import com.github.vnord.derdiedas.domain.model.Noun
+import com.github.vnord.derdiedas.data.entity.Noun
 import com.github.vnord.derdiedas.domain.usecase.UseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +17,7 @@ import javax.inject.Inject
 class AddNounViewModel @Inject constructor(
     private val useCases: UseCases,
 ) : ViewModel() {
-    private val selectedNounGender = MutableStateFlow<Gender?>(null)
+    private val selectedNounGender = MutableStateFlow<Noun.Gender?>(null)
     private val nounText = MutableStateFlow("")
 
     val uiState: StateFlow<AddNounUiState> = combine(
@@ -35,7 +34,7 @@ class AddNounViewModel @Inject constructor(
         initialValue = AddNounUiState(),
     )
 
-    fun selectGender(gender: Gender) {
+    fun selectGender(gender: Noun.Gender) {
         selectedNounGender.value = gender
     }
 
@@ -46,7 +45,7 @@ class AddNounViewModel @Inject constructor(
     fun onSave() = viewModelScope.launch {
         val noun = selectedNounGender.value?.let { gender ->
             Noun(
-                noun = nounText.value.trim(),
+                nounString = nounText.value.trim(),
                 gender = gender,
             )
         }

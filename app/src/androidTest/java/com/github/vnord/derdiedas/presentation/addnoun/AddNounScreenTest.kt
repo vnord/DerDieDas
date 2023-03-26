@@ -26,7 +26,6 @@ import com.github.vnord.derdiedas.core.util.TestTags
 import com.github.vnord.derdiedas.di.AppModule
 import com.github.vnord.derdiedas.presentation.MainActivity
 import com.github.vnord.derdiedas.presentation.Screen
-import com.github.vnord.derdiedas.presentation.addnoun.AddNounScreen
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules

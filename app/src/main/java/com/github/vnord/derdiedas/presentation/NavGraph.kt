@@ -6,11 +6,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.github.vnord.derdiedas.presentation.Screen.AddNounScreen
+import com.github.vnord.derdiedas.presentation.Screen.CategoriesScreen
 import com.github.vnord.derdiedas.presentation.Screen.DoneScreen
 import com.github.vnord.derdiedas.presentation.Screen.HomeScreen
 import com.github.vnord.derdiedas.presentation.Screen.NounListScreen
 import com.github.vnord.derdiedas.presentation.Screen.QuizScreen
 import com.github.vnord.derdiedas.presentation.addnoun.AddNounScreen
+import com.github.vnord.derdiedas.presentation.categories.CategoriesScreen
 import com.github.vnord.derdiedas.presentation.done.DoneScreen
 import com.github.vnord.derdiedas.presentation.home.HomeScreen
 import com.github.vnord.derdiedas.presentation.nounlist.NounListScreen
@@ -25,9 +27,14 @@ fun SetupNavGraph(navController: NavHostController = rememberNavController()) {
             HomeScreen(navController = navController)
         }
         composable(
-            route = NounListScreen.route,
+            route = NounListScreen.route + "?category={category}",
         ) {
             NounListScreen(navController = navController)
+        }
+        composable(
+            route = CategoriesScreen.route,
+        ) {
+            CategoriesScreen(navController = navController)
         }
         composable(
             route = AddNounScreen.route,

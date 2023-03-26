@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Text
@@ -27,7 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import com.github.vnord.derdiedas.R
 import com.github.vnord.derdiedas.core.util.TestTags
 import com.github.vnord.derdiedas.core.util.rememberStateWithLifecycle
-import com.github.vnord.derdiedas.domain.model.Gender
+import com.github.vnord.derdiedas.data.entity.Noun
 
 @Composable
 fun AddNounScreen(
@@ -36,22 +37,24 @@ fun AddNounScreen(
 ) {
     val uiState by rememberStateWithLifecycle(viewModel.uiState)
 
-    AddNounScreen(
-        uiState = uiState,
-        onEnteredNounText = viewModel::enterNounText,
-        onSelectedGender = viewModel::selectGender,
-        onSave = {
-            viewModel.onSave()
-            navController.navigateUp()
-        },
-    )
+    MaterialTheme {
+        AddNounScreen(
+            uiState = uiState,
+            onEnteredNounText = viewModel::enterNounText,
+            onSelectedGender = viewModel::selectGender,
+            onSave = {
+                viewModel.onSave()
+                navController.navigateUp()
+            },
+        )
+    }
 }
 
 @Composable
 private fun AddNounScreen(
     uiState: AddNounUiState,
     onEnteredNounText: (String) -> Unit,
-    onSelectedGender: (Gender) -> Unit,
+    onSelectedGender: (Noun.Gender) -> Unit,
     onSave: () -> Unit,
 ) {
     Row(
@@ -62,7 +65,7 @@ private fun AddNounScreen(
         Column {
             Row(horizontalArrangement = Arrangement.End) {
                 Column(modifier = Modifier.testTag(TestTags.GENDER_BUTTONS)) {
-                    Gender.values().forEach { gender ->
+                    Noun.Gender.values().forEach { gender ->
                         Row {
                             RadioButton(
                                 selected = (gender == uiState.selectedNounGender),

@@ -99,3 +99,6 @@ dependencies {
     androidTestImplementation("androidx.test:runner:1.5.2")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.3.3")
 }
+android {
+    namespace = "com.github.vnord.derdiedas"
+}

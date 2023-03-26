@@ -4,4 +4,5 @@ data class UseCases(
     val addNoun: AddNoun,
     val getNouns: GetNouns,
     val getNextNoun: GetNextNoun,
+    val getCategories: GetCategories,
 )
