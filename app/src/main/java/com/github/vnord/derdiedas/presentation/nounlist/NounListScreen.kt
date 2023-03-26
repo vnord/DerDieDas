@@ -25,8 +25,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.github.vnord.derdiedas.R
 import com.github.vnord.derdiedas.core.util.rememberStateWithLifecycle
-import com.github.vnord.derdiedas.domain.model.Gender
-import com.github.vnord.derdiedas.domain.model.Noun
+import com.github.vnord.derdiedas.data.entity.Noun
 import com.github.vnord.derdiedas.presentation.Screen
 
 @Composable
@@ -57,16 +56,18 @@ private fun NounListScreen(
                 Divider(Modifier.padding(5.dp))
             }
         }
-        Button(
-            onClick = { onClickNewButton() },
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(16.dp),
-        ) {
-            Image(
-                imageVector = Icons.Default.Add,
-                contentDescription = stringResource(R.string.add_noun),
-            )
+        if (uiState.shouldShowAddButton) {
+            Button(
+                onClick = { onClickNewButton() },
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(16.dp),
+            ) {
+                Image(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(R.string.add_noun),
+                )
+            }
         }
     }
 }
@@ -74,9 +75,15 @@ private fun NounListScreen(
 @Composable
 fun NounEntry(noun: Noun) {
     Row(modifier = Modifier.fillMaxSize()) {
-        Text(text = noun.gender.str, textAlign = TextAlign.Start)
+        Text(
+            text = noun.gender.str,
+            textAlign = TextAlign.Start,
+        )
         Text(text = " ")
-        Text(text = noun.noun, textAlign = TextAlign.End)
+        Text(
+            text = noun.nounString,
+            textAlign = TextAlign.End,
+        )
     }
 }
 
@@ -85,13 +92,14 @@ fun NounEntry(noun: Noun) {
 fun NounListScreenPreview() {
     val nouns = List(20) {
         Noun(
-            noun = listOf("Frau", "Mann", "FooBar", "Whatever").random(),
-            gender = Gender.values().random(),
+            nounString = listOf("Frau", "Mann", "FooBar", "Whatever").random(),
+            gender = Noun.Gender.values().random(),
         )
     }
     NounListScreen(
         uiState = NounListUiState(
             nouns = nouns,
+            shouldShowAddButton = true,
         ),
         onClickNewButton = {},
     )

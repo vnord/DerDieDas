@@ -1,7 +1,8 @@
 package com.github.vnord.derdiedas.presentation.nounlist
 
-import com.github.vnord.derdiedas.domain.model.Noun
+import com.github.vnord.derdiedas.data.entity.Noun
 
 data class NounListUiState(
-    val nouns: List<Noun> = emptyList()
+    val nouns: List<Noun> = emptyList(),
+    val shouldShowAddButton: Boolean = false,
 )
