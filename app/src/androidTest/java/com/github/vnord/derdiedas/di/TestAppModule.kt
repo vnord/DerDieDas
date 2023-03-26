@@ -26,16 +26,8 @@ object TestAppModule {
 
     @Provides
     @Singleton
-    fun provideNounDatabase(app: Application): NounDatabase {
-        val db = Room.inMemoryDatabaseBuilder(app, NounDatabase::class.java).build()
-        runBlocking {
-            withContext(Dispatchers.IO) {
-                db.nounDao.insertCategory(Categories.MyNouns)
-                db.nounDao.insertCategory(Categories.Top100)
-            }
-        }
-        return db
-    }
+    fun provideNounDatabase(app: Application): NounDatabase =
+        runBlocking { NounDatabase.create(app.applicationContext) }
 
     @Provides
     @Singleton

@@ -93,11 +93,11 @@ class NounsE2E {
     }
 
     @Test
-    fun playQuizWithDifferentCategory(): Unit = with(composeRule) {
+    fun playQuizWithTop100(): Unit = with(composeRule) {
         onNodeWithText(Categories.MyNouns.categoryName).performClick()
         onNodeWithText(Categories.Top100.categoryName).performClick()
         onNodeWithContentDescription(activity.getString(R.string.start_quiz)).performClick()
-        // We don't seed the test DB, so we are immediately done here
+        // TODO: there should be nouns in the quiz if we create the db as usual -- investigate
         hasText(activity.getString(R.string.done_text), ignoreCase = true)
     }
 }
