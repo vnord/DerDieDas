@@ -91,4 +91,13 @@ class NounsE2E {
         onNodeWithContentDescription(activity.getString(R.string.start_quiz)).performClick()
         hasText(activity.getString(R.string.done_text), ignoreCase = true)
     }
+
+    @Test
+    fun playQuizWithDifferentCategory(): Unit = with(composeRule) {
+        onNodeWithText(Categories.MyNouns.categoryName).performClick()
+        onNodeWithText(Categories.Top100.categoryName).performClick()
+        onNodeWithContentDescription(activity.getString(R.string.start_quiz)).performClick()
+        // We don't seed the test DB, so we are immediately done here
+        hasText(activity.getString(R.string.done_text), ignoreCase = true)
+    }
 }

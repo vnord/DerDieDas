@@ -10,8 +10,8 @@ class FakeNounRepository : NounRepository {
     private val nouns = mutableListOf<Noun>()
     val category = Category("My Nouns", 0)
 
-    override fun getNouns(category: Category, limit: Int?): Flow<List<Noun>> =
-        flow { if (limit == null) emit(nouns) else emit(nouns.take(limit)) }
+    override fun getNouns(category: Category, limit: Int): Flow<List<Noun>> =
+        flow { emit(nouns.take(limit)) }
 
     override suspend fun insertNoun(noun: Noun, category: Category) {
         nouns.add(noun)

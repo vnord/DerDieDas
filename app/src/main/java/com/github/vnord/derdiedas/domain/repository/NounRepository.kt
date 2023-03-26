@@ -5,7 +5,7 @@ import com.github.vnord.derdiedas.data.entity.Noun
 import kotlinx.coroutines.flow.Flow
 
 interface NounRepository {
-    fun getNouns(category: Category, limit: Int? = null): Flow<List<Noun>>
+    fun getNouns(category: Category, limit: Int): Flow<List<Noun>>
 
     suspend fun insertNoun(noun: Noun, category: Category)
 

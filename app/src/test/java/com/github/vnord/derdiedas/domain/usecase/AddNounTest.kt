@@ -23,6 +23,6 @@ class AddNounTest {
         // Again, these tests will be more relevant once we have more business logic
         val noun = Noun("Mann", Noun.Gender.MASCULINE)
         addNoun(noun)
-        assertThat(fakeRepository.getNouns(fakeRepository.category).first().single()).isEqualTo(noun)
+        assertThat(fakeRepository.getNouns(fakeRepository.category, limit = 5).first().single()).isEqualTo(noun)
     }
 }

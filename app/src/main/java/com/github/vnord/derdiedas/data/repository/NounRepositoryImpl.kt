@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class NounRepositoryImpl(private val dao: NounDao) : NounRepository {
-    override fun getNouns(category: Category, limit: Int?): Flow<List<Noun>> =
-        dao.getNounsOfCategory(category.categoryName).map {
-            it.nouns
+    override fun getNouns(category: Category, limit: Int): Flow<List<Noun>> =
+        dao.getNounsOfCategory(category.categoryName).map { categoryWithNouns ->
+            categoryWithNouns.nouns.take(limit)
         }
 
     override suspend fun insertNoun(noun: Noun, category: Category) {

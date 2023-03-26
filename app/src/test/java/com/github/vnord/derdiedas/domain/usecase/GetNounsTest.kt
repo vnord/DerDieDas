@@ -26,6 +26,6 @@ class GetNounsTest {
     fun `get nouns`(): Unit = runBlocking {
         // This is kinda dumb right now, but will probably be more relevant once we start
         // adding more business logic to `getNouns`
-        assertThat(getNouns().first()).containsExactlyElementsIn(testNouns)
+        assertThat(getNouns(limit = 100).first()).containsExactlyElementsIn(testNouns)
     }
 }

@@ -3,6 +3,7 @@ package com.github.vnord.derdiedas.presentation.nounlist
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.vnord.derdiedas.data.entity.Category
 import com.github.vnord.derdiedas.domain.model.Categories
 import com.github.vnord.derdiedas.domain.usecase.UseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,11 +24,7 @@ class NounListViewModel @Inject constructor(
         savedStateHandle.getStateFlow("category", Categories.MyNouns.categoryName)
 
     val uiState = routeFlow.flatMapLatest { route ->
-        val nounsFlow = when (route) {
-            Categories.MyNouns.categoryName -> useCases.getNouns(Categories.MyNouns)
-            Categories.Top100.categoryName -> useCases.getNouns(Categories.Top100)
-            else -> useCases.getNouns(Categories.MyNouns)
-        }
+        val nounsFlow = useCases.getNouns(Categories.fromString(route), 5)
         nounsFlow.map {
             NounListUiState(
                 nouns = it,
